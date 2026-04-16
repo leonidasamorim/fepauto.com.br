@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: rallye_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: rallye_inscricoes
+      MYSQL_USER: rallye
+      MYSQL_PASSWORD: rallye123
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./banco.sql:/docker-entrypoint-initdb.d/01_banco.sql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  php:
+    build: .
+    container_name: rallye_php
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+      mailpit:
+        condition: service_started
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: rallye_pma
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: rallye
+      PMA_PASSWORD: rallye123
+    ports:
+      - "8080:80"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: rallye_mail
+    restart: unless-stopped
+    ports:
+      - "8025:8025"   # Interface web dos e-mails
+      - "1025:1025"   # SMTP (usado pelo PHP)
+
+volumes:
+  mysql_data:
