@@ -53,6 +53,11 @@ function emailConfirmacao(array $d): string {
         'Carro' => "Carro / UTV",
         default => $d['veiculo'],
     };
+    $isPix   = ($d['forma_pagamento'] ?? '') === 'pix';
+    $titulo  = $isPix ? 'Inscrição em andamento!' : 'Inscrição Confirmada!';
+    $avisoTxt = $isPix
+        ? 'Sua inscrição foi recebida. Para garantir sua vaga, realize o pagamento via PIX e envie o comprovante para <strong>fepauto@fepauto.com.br</strong>.'
+        : 'Sua inscrição estará confirmada somente após a confirmação do pagamento.';
 
     $nav = '';
     if ($d['veiculo'] === 'Carro' && !empty($d['navegador_nome'])) {
@@ -70,12 +75,11 @@ function emailConfirmacao(array $d): string {
             <p style='color:#ccc;margin:4px 0 0'>Federação Paraense de Automobilismo</p>
         </div>
         <div style='background:#fff;border:1px solid #ddd;padding:24px;border-radius:0 0 8px 8px'>
-            <h2 style='color:#c0392b'>Inscrição Confirmada!</h2>
+            <h2 style='color:#c0392b'>" . $titulo . "</h2>
             <p>Olá, <strong>" . s($d['nome']) . "</strong>!</p>
             <p>Sua inscrição no <strong>" . EVENT_NAME . "</strong> foi recebida com sucesso.</p>
             <p style='background:#fff3cd;padding:12px;border-radius:4px;border-left:4px solid #ffc107'>
-                <strong>⚠ Atenção:</strong> Sua inscrição estará confirmada somente após a
-                confirmação do pagamento.
+                <strong>⚠ Atenção:</strong> " . $avisoTxt . "
             </p>
             <h3>Resumo da Inscrição</h3>
             <table style='width:100%;border-collapse:collapse'>
@@ -304,6 +308,7 @@ $emailData = [
     'navegador_nome'      => $campos['nav_nome'],
     'navegador_rg'        => $campos['nav_rg'],
     'tipo_sangue_navegador' => $campos['nav_tipo_sangue'],
+    'forma_pagamento'     => $campos['forma_pagamento'],
 ];
 
 Mailer::send(
