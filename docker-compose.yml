@@ -26,7 +26,7 @@ services:
     container_name: rallye_php
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "8080:80"
     volumes:
       - .:/var/www/html
     depends_on:
@@ -45,7 +45,7 @@ services:
       PMA_USER: rallye
       PMA_PASSWORD: rallye123
     ports:
-      - "8080:80"
+      - "8081:80"
     depends_on:
       db:
         condition: service_healthy

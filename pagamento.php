@@ -188,7 +188,7 @@ if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
                                     <strong>Como realizar o pagamento:</strong><br/><br/>
                                     Entre em contato com a organização para receber os dados de pagamento:<br/>
                                     <ul class="mt-2">
-                                        <li>E-mail: <strong>inscricao@fepauto.com.br</strong></li>
+                                        <li>E-mail: <strong>fepauto@fepauto.com.br</strong></li>
                                         <li>WhatsApp: <strong>(91) 99999-9999</strong></li>
                                     </ul>
                                     Informe seu protocolo: <strong><?= $protocolo ?></strong>
@@ -209,7 +209,7 @@ if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
 
                         <hr/>
                         <p class="text-center text-muted small">
-                            Dúvidas? Entre em contato: <strong>inscricao@fepauto.com.br</strong>
+                            Dúvidas? Entre em contato: <strong>fepauto@fepauto.com.br</strong>
                         </p>
 
                     </div>

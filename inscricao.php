@@ -1,6 +1,25 @@
 <?php
+require_once __DIR__ . '/config.php';
 session_start();
-// Gera token CSRF
+
+// Restaura dados do formulário após erro de validação
+$old = $_SESSION['form_data'] ?? [];
+unset($_SESSION['form_data']);
+
+// Helpers de repopulação
+function old(string $key, string $default = ''): string {
+    global $old;
+    return htmlspecialchars((string)($old[$key] ?? $default), ENT_QUOTES, 'UTF-8');
+}
+function oldIs(string $key, string $value): string {
+    global $old;
+    return (isset($old[$key]) && $old[$key] === $value) ? 'checked' : '';
+}
+function oldSel(string $key, string $value): string {
+    global $old;
+    return (isset($old[$key]) && $old[$key] === $value) ? 'selected' : '';
+}
+
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
@@ -66,9 +85,7 @@ $csrf = $_SESSION['csrf_token'];
                                 </tbody>
                             </table>
                         </div>
-                        <p class="text-muted small text-center">
-                            Arraste para ver todas as datas e valores.
-                        </p>
+                        <p class="text-muted small text-center">Arraste para ver todas as datas e valores.</p>
                     </div>
                 </div>
             </div>
@@ -101,14 +118,16 @@ $csrf = $_SESSION['csrf_token'];
                                     <label>NOME COMPLETO <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" name="fNome" class="form-control"
-                                               placeholder="Nome Completo" required maxlength="255"/>
+                                               placeholder="Nome Completo" required maxlength="255"
+                                               value="<?= old('fNome') ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <label>CPF <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" id="fCpf" name="fCpf" class="form-control"
-                                               placeholder="000.000.000-00" required maxlength="14"/>
+                                               placeholder="000.000.000-00" required maxlength="14"
+                                               value="<?= old('fCpf') ?>"/>
                                     </div>
                                     <span style="color:red;font-size:11px;display:none" id="alert-cpf">
                                         CPF já cadastrado ou inválido!
@@ -118,7 +137,8 @@ $csrf = $_SESSION['csrf_token'];
                                     <label>RG <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" name="fRg" class="form-control"
-                                               placeholder="Número" required maxlength="30"/>
+                                               placeholder="Número" required maxlength="30"
+                                               value="<?= old('fRg') ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -126,7 +146,8 @@ $csrf = $_SESSION['csrf_token'];
                                     <div class="form-wrap">
                                         <input type="text" id="data_nasc" name="fDtNascimento"
                                                class="form-control data_nasc"
-                                               placeholder="dd/mm/aaaa" required maxlength="10"/>
+                                               placeholder="dd/mm/aaaa" required maxlength="10"
+                                               value="<?= old('fDtNascimento') ?>"/>
                                     </div>
                                 </div>
                             </div>
@@ -136,14 +157,16 @@ $csrf = $_SESSION['csrf_token'];
                                     <label>NOME DO PAI <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" name="fNomePai" class="form-control"
-                                               placeholder="Nome Completo" required maxlength="255"/>
+                                               placeholder="Nome Completo" required maxlength="255"
+                                               value="<?= old('fNomePai') ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label>NOME DA MÃE <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" name="fNomeMae" class="form-control"
-                                               placeholder="Nome Completo" required maxlength="255"/>
+                                               placeholder="Nome Completo" required maxlength="255"
+                                               value="<?= old('fNomeMae') ?>"/>
                                     </div>
                                 </div>
                             </div>
@@ -153,22 +176,26 @@ $csrf = $_SESSION['csrf_token'];
                                 <div class="col-md-3">
                                     <label>CEP <span class="required">*</span></label>
                                     <div class="form-wrap">
-                                        <input type="text" id="zipcode" name="fCep" class="form-control zipcode"
-                                               placeholder="00000-000" required maxlength="9"/>
+                                        <input type="text" id="zipcode" name="fCep"
+                                               class="form-control zipcode"
+                                               placeholder="00000-000" required maxlength="9"
+                                               value="<?= old('fCep') ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <label>ENDEREÇO <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" id="address" name="fEndereco" class="form-control"
-                                               placeholder="Rua, Av..." required maxlength="255"/>
+                                               placeholder="Rua, Av..." required maxlength="255"
+                                               value="<?= old('fEndereco') ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label>BAIRRO <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" id="neighborhood" name="fBairro" class="form-control"
-                                               placeholder="Bairro" required maxlength="100"/>
+                                               placeholder="Bairro" required maxlength="100"
+                                               value="<?= old('fBairro') ?>"/>
                                     </div>
                                 </div>
                             </div>
@@ -178,14 +205,16 @@ $csrf = $_SESSION['csrf_token'];
                                     <label>CIDADE <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" id="city" name="fCidade" class="form-control"
-                                               placeholder="Cidade" required maxlength="100"/>
+                                               placeholder="Cidade" required maxlength="100"
+                                               value="<?= old('fCidade') ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label>ESTADO <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" id="state" name="fEstado" class="form-control"
-                                               placeholder="UF" required maxlength="50"/>
+                                               placeholder="UF" required maxlength="50"
+                                               value="<?= old('fEstado') ?>"/>
                                     </div>
                                 </div>
                             </div>
@@ -196,15 +225,21 @@ $csrf = $_SESSION['csrf_token'];
                                     <label>E-MAIL <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="email" id="fEmail" name="fEmail" class="form-control"
-                                               placeholder="seu@email.com" required maxlength="255"/>
+                                               placeholder="seu@email.com" required maxlength="255"
+                                               value="<?= old('fEmail') ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <label>CONFIRMAR E-MAIL <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="email" id="fEmailConf" name="fEmailConf" class="form-control"
-                                               placeholder="seu@email.com" required maxlength="255"/>
+                                               placeholder="seu@email.com" required maxlength="255"
+                                               value="<?= old('fEmailConf') ?>"/>
                                     </div>
+                                    <span id="msg-email-conf"
+                                          style="display:none;color:#c0392b;font-size:12px">
+                                        E-mail e confirmação não conferem.
+                                    </span>
                                 </div>
                             </div>
 
@@ -213,7 +248,8 @@ $csrf = $_SESSION['csrf_token'];
                                     <label>CELULAR / WHATSAPP <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" name="fTelefone" class="form-control whatsapp"
-                                               placeholder="(00) 00000-0000" required maxlength="20"/>
+                                               placeholder="(00) 00000-0000" required maxlength="20"
+                                               value="<?= old('fTelefone') ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -221,7 +257,8 @@ $csrf = $_SESSION['csrf_token'];
                                     <div class="form-wrap" style="padding-top:6px">
                                         <?php foreach (['A+','A-','B+','B-','AB+','AB-','O+','O-'] as $ts): ?>
                                             <label class="mr-3" style="font-weight:normal;">
-                                                <input type="radio" name="fTipoSangue" value="<?= $ts ?>" required/>
+                                                <input type="radio" name="fTipoSangue" value="<?= $ts ?>"
+                                                       required <?= oldIs('fTipoSangue', $ts) ?>/>
                                                 <?= $ts ?>
                                             </label>
                                         <?php endforeach; ?>
@@ -238,9 +275,9 @@ $csrf = $_SESSION['csrf_token'];
                                     <div class="form-wrap">
                                         <select class="form-control" id="fVeiculo" name="fVeiculo" required>
                                             <option value="">-- Selecione --</option>
-                                            <option value="Carro">Carro / UTV</option>
-                                            <option value="Moto">Moto</option>
-                                            <option value="Quadriciclo">Quadriciclo</option>
+                                            <option value="Carro"       <?= oldSel('fVeiculo','Carro') ?>>Carro / UTV</option>
+                                            <option value="Moto"        <?= oldSel('fVeiculo','Moto') ?>>Moto</option>
+                                            <option value="Quadriciclo" <?= oldSel('fVeiculo','Quadriciclo') ?>>Quadriciclo</option>
                                         </select>
                                     </div>
                                 </div>
@@ -262,14 +299,16 @@ $csrf = $_SESSION['csrf_token'];
                                     <label>NOME <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" id="fNavegadorNome" name="fNavegadorNome"
-                                               class="form-control" maxlength="255"/>
+                                               class="form-control" maxlength="255"
+                                               value="<?= old('fNavegadorNome') ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <label>RG <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" id="fNavegadorRg" name="fNavegadorRg"
-                                               class="form-control" maxlength="30"/>
+                                               class="form-control" maxlength="30"
+                                               value="<?= old('fNavegadorRg') ?>"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -278,7 +317,8 @@ $csrf = $_SESSION['csrf_token'];
                                         <?php foreach (['A+','A-','B+','B-','AB+','AB-','O+','O-'] as $ts): ?>
                                             <label class="mr-2" style="font-weight:normal;">
                                                 <input type="radio" name="fTipoSangueNavegador"
-                                                       class="fTipoSangueNavegador" value="<?= $ts ?>"/>
+                                                       class="fTipoSangueNavegador" value="<?= $ts ?>"
+                                                       <?= oldIs('fTipoSangueNavegador', $ts) ?>/>
                                                 <?= $ts ?>
                                             </label>
                                         <?php endforeach; ?>
@@ -292,10 +332,14 @@ $csrf = $_SESSION['csrf_token'];
                                     <label>Possui Carteira da Federação? <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <label class="mr-4" style="font-weight:normal;font-size:18px;">
-                                            Sim <input type="radio" class="fPossuiCarteira" name="fPossuiCarteira" value="1"/>
+                                            Sim <input type="radio" class="fPossuiCarteira"
+                                                       name="fPossuiCarteira" value="1"
+                                                       <?= oldIs('fPossuiCarteira','1') ?>/>
                                         </label>
                                         <label style="font-weight:normal;font-size:18px;">
-                                            Não <input type="radio" class="fPossuiCarteira" name="fPossuiCarteira" value="0"/>
+                                            Não <input type="radio" class="fPossuiCarteira"
+                                                       name="fPossuiCarteira" value="0"
+                                                       <?= oldIs('fPossuiCarteira','0') ?>/>
                                         </label>
                                     </div>
                                 </div>
@@ -304,12 +348,14 @@ $csrf = $_SESSION['csrf_token'];
                                     <div class="form-wrap">
                                         <label class="mr-4" style="font-weight:normal;font-size:18px;">
                                             Sim <input type="radio" class="fCarteiraValida valida-sim vigente"
-                                                       name="fValida" value="1"/>
+                                                       name="fValida" value="1"
+                                                       <?= oldIs('fValida','1') ?>/>
                                         </label>
                                         <label style="font-weight:normal;font-size:18px;">
                                             Não <input type="radio" id="fCarteiraValida"
                                                        class="fCarteiraValida valida-nao vigente"
-                                                       name="fValida" value="0"/>
+                                                       name="fValida" value="0"
+                                                       <?= oldIs('fValida','0') ?>/>
                                         </label>
                                     </div>
                                 </div>
@@ -320,7 +366,8 @@ $csrf = $_SESSION['csrf_token'];
                                     <label>Nº CARTEIRA DA FEDERAÇÃO <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <input type="text" name="fCarteira" id="fCarteira"
-                                               class="form-control" maxlength="50"/>
+                                               class="form-control" maxlength="50"
+                                               value="<?= old('fCarteira') ?>"/>
                                     </div>
                                 </div>
                             </div>
@@ -331,10 +378,12 @@ $csrf = $_SESSION['csrf_token'];
                                     <div class="form-wrap">
                                         <select id="fEspecificarCarro" class="form-control" name="fEspecificarCarro">
                                             <option value="">-- Selecione --</option>
-                                            <option value="Renovação – provas somente no Pará">
+                                            <option value="Renovação – provas somente no Pará"
+                                                    <?= oldSel('fEspecificarCarro','Renovação – provas somente no Pará') ?>>
                                                 Renovação – Provas somente no estado do Pará
                                             </option>
-                                            <option value="Renovação – outros estados ou provas nacionais">
+                                            <option value="Renovação – outros estados ou provas nacionais"
+                                                    <?= oldSel('fEspecificarCarro','Renovação – outros estados ou provas nacionais') ?>>
                                                 Renovação – Outros estados ou provas nacionais
                                             </option>
                                         </select>
@@ -348,7 +397,8 @@ $csrf = $_SESSION['csrf_token'];
                                     <div class="form-wrap">
                                         <select id="fEspecificarMoto" class="form-control" name="fEspecificarMoto">
                                             <option value="">-- Selecione --</option>
-                                            <option value="Nunca teve carteira CBM – participará somente do Rallye">
+                                            <option value="Nunca teve carteira CBM – participará somente do Rallye"
+                                                    <?= oldSel('fEspecificarMoto','Nunca teve carteira CBM – participará somente do Rallye') ?>>
                                                 Nunca teve carteira CBM e participará somente do Rallye
                                             </option>
                                         </select>
@@ -363,7 +413,10 @@ $csrf = $_SESSION['csrf_token'];
                                         <select id="fEspecificarMotoRenovacao" class="form-control"
                                                 name="fEspecificarMotoRenovacao">
                                             <option value="">-- Selecione --</option>
-                                            <option value="Renovação">Renovação</option>
+                                            <option value="Renovação"
+                                                    <?= oldSel('fEspecificarMotoRenovacao','Renovação') ?>>
+                                                Renovação
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -386,15 +439,26 @@ $csrf = $_SESSION['csrf_token'];
                                 </div>
                             </div>
 
-                            <!-- Participação anterior -->
+                            <!-- Participação + Forma de pagamento -->
                             <div class="row mt-2">
                                 <div class="col-md-6">
                                     <label>Já participou do Rallye do Sol? <span class="required">*</span></label>
                                     <div class="form-wrap">
                                         <select class="form-control" name="fParticipacao" required>
                                             <option value="">-- Selecione --</option>
-                                            <option value="1">Sim</option>
-                                            <option value="0">Não</option>
+                                            <option value="1" <?= oldSel('fParticipacao','1') ?>>Sim</option>
+                                            <option value="0" <?= oldSel('fParticipacao','0') ?>>Não</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label>FORMA DE PAGAMENTO <span class="required">*</span></label>
+                                    <div class="form-wrap">
+                                        <select class="form-control" id="fFormaPagamento"
+                                                name="fFormaPagamento" required>
+                                            <option value="">-- Selecione --</option>
+                                            <option value="pix"    <?= oldSel('fFormaPagamento','pix') ?>>PIX</option>
+                                            <option value="cartao" <?= oldSel('fFormaPagamento','cartao') ?>>Cartão de Crédito / Débito</option>
                                         </select>
                                     </div>
                                 </div>
@@ -405,7 +469,7 @@ $csrf = $_SESSION['csrf_token'];
                                 <div class="col-md-12 alert alert-warning">
                                     <strong style="color:red">ATENÇÃO:</strong><br/>
                                     I. Envie cópia da Habilitação para o e-mail
-                                    <strong>inscricao@fepauto.com.br</strong><br/>
+                                    <strong>fepauto@fepauto.com.br</strong><br/>
                                     II. No dia da entrega do kit do XXVI Rallye do Sol o inscrito deverá
                                     apresentar comprovante de pagamento.
                                 </div>
@@ -414,7 +478,7 @@ $csrf = $_SESSION['csrf_token'];
                             <!-- Botão -->
                             <div class="row mt-3">
                                 <div class="col-md-12 text-center">
-                                    <button type="submit" class="btn btn-primary btn-lg">
+                                    <button type="submit" id="btn-submit" class="btn btn-primary btn-lg">
                                         ENVIAR INSCRIÇÃO
                                     </button>
                                 </div>
@@ -453,6 +517,45 @@ $csrf = $_SESSION['csrf_token'];
 <script src="inscricao-inc/js/jquery.min.js"></script>
 <script src="inscricao-inc/js/bootstrap.min.js"></script>
 <script src="inscricao-inc/js/jquery.mask.js"></script>
-<script src="inscricao-inc/js/general.js?v=3"></script>
+<script src="inscricao-inc/js/general.js?v=4"></script>
+
+<?php if (!empty($old)): ?>
+<script>
+// Restaura estado dinâmico do formulário após erro de validação
+$(function () {
+    var fd = <?= json_encode([
+        'veiculo'        => $old['fVeiculo']        ?? '',
+        'categoria'      => $old['fCategoria']      ?? '',
+        'possuiCarteira' => $old['fPossuiCarteira'] ?? '',
+        'valida'         => $old['fValida']          ?? '',
+        'formaPagamento' => $old['fFormaPagamento'] ?? '',
+    ], JSON_HEX_TAG | JSON_HEX_APOS) ?>;
+
+    if (fd.veiculo) {
+        // Dispara change do veículo: mostra seções corretas e carrega categorias via AJAX
+        $('#fVeiculo').trigger('change');
+
+        // Seleciona a categoria após o AJAX carregar (~700 ms)
+        if (fd.categoria) {
+            setTimeout(function () {
+                $('#fCategoria').val(fd.categoria);
+            }, 700);
+        }
+    }
+
+    if (fd.possuiCarteira !== '') {
+        $('input.fPossuiCarteira[value="' + fd.possuiCarteira + '"]').trigger('change');
+    }
+
+    if (fd.valida !== '') {
+        $('input.fCarteiraValida[value="' + fd.valida + '"]').trigger('change');
+    }
+
+    if (fd.formaPagamento) {
+        $('#fFormaPagamento').trigger('change');
+    }
+});
+</script>
+<?php endif; ?>
 </body>
 </html>

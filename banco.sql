@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS inscricoes (
     -- Participação
     participacao              TINYINT(1)    NOT NULL DEFAULT 0,
     -- Financeiro
+    forma_pagamento           ENUM('pix','cartao') NOT NULL DEFAULT 'pix',
     valor                     DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     status_pagamento          ENUM('pendente','pago','cancelado') NOT NULL DEFAULT 'pendente',
     pagseguro_code            VARCHAR(100)  DEFAULT NULL,

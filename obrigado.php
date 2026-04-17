@@ -27,7 +27,7 @@ require_once __DIR__ . '/config.php';
         <p>
             Seu pagamento foi processado pelo PagSeguro. Em breve você receberá a
             confirmação por e-mail. Caso não receba em até 24h, verifique sua caixa de spam
-            ou entre em contato: <strong>inscricao@fepauto.com.br</strong>
+            ou entre em contato: <strong>fepauto@fepauto.com.br</strong>
         </p>
         <hr/>
         <p class="text-muted small">

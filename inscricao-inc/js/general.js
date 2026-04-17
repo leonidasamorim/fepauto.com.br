@@ -108,10 +108,20 @@ $(document).ready(function () {
 
     // ─── Confirmação de e-mail ────────────────────────────────────────────────
     $('#fEmailConf').on('blur', function () {
-        if ($('#fEmail').val() !== $(this).val()) {
-            alert('E-mail e confirmação não conferem!');
-            $(this).val('').focus();
+        var email     = $('#fEmail').val();
+        var emailConf = $(this).val();
+        if (!email || !emailConf) return;          // aguarda os dois serem preenchidos
+        if (email !== emailConf) {
+            $('#msg-email-conf').show();
+            $(this).addClass('is-invalid');
+        } else {
+            $('#msg-email-conf').hide();
+            $(this).removeClass('is-invalid');
         }
+    });
+    $('#fEmailConf, #fEmail').on('input', function () {
+        $('#msg-email-conf').hide();
+        $('#fEmailConf').removeClass('is-invalid');
     });
 
     // ─── Validação CPF via AJAX ───────────────────────────────────────────────
@@ -150,6 +160,18 @@ $(document).ready(function () {
             $('#address, #neighborhood, #city, #state').val('');
             alert('Erro ao consultar CEP. Preencha manualmente.');
         });
+    });
+
+    // ─── Forma de pagamento → atualiza texto do botão ────────────────────────
+    $('#fFormaPagamento').on('change', function () {
+        var forma = $(this).val();
+        if (forma === 'pix') {
+            $('#btn-submit').text('ENVIAR INSCRIÇÃO');
+        } else if (forma === 'cartao') {
+            $('#btn-submit').text('ENVIAR INSCRIÇÃO E IR PARA PAGAMENTO');
+        } else {
+            $('#btn-submit').text('ENVIAR INSCRIÇÃO');
+        }
     });
 
     // ─── Máscaras ─────────────────────────────────────────────────────────────

@@ -147,9 +147,10 @@ $campos = [
     'email_conf'   => strtolower(post('fEmailConf')),
     'telefone'     => post('fTelefone'),
     'tipo_sangue'  => post('fTipoSangue'),
-    'veiculo'      => post('fVeiculo'),
-    'categoria'    => post('fCategoria'),
-    'participacao' => post('fParticipacao'),
+    'veiculo'          => post('fVeiculo'),
+    'categoria'        => post('fCategoria'),
+    'participacao'     => post('fParticipacao'),
+    'forma_pagamento'  => post('fFormaPagamento'),
 
     // Opcionais
     'nav_nome'              => post('fNavegadorNome'),
@@ -182,6 +183,8 @@ if (empty($campos['tipo_sangue'])) $erros[] = 'Tipo sanguíneo é obrigatório.'
 if (empty($campos['veiculo']))     $erros[] = 'Veículo é obrigatório.';
 if (empty($campos['categoria']))   $erros[] = 'Categoria é obrigatória.';
 if ($campos['participacao'] === '') $erros[] = 'Informe se já participou do Rallye.';
+if (!in_array($campos['forma_pagamento'], ['pix', 'cartao'], true))
+    $erros[] = 'Selecione a forma de pagamento.';
 
 // Conversão data dd/mm/aaaa → AAAA-MM-DD
 $dtNasc = null;
@@ -201,6 +204,7 @@ if (!empty($campos['dt_nasc_raw'])) {
 }
 
 if (!empty($erros)) {
+    $_SESSION['form_data'] = $_POST;
     redirect('inscricao.php?erro=' . urlencode(implode(' | ', $erros)));
 }
 
@@ -233,7 +237,7 @@ $sql = "INSERT INTO inscricoes
      navegador_nome, navegador_rg, tipo_sangue_navegador,
      possui_carteira, carteira_valida, num_carteira,
      especificar_carro, especificar_moto, especificar_moto_renovacao,
-     participacao, valor)
+     participacao, forma_pagamento, valor)
 VALUES
     (:nome, :cpf, :rg, :dt_nasc, :nome_pai, :nome_mae,
      :cep, :endereco, :bairro, :cidade, :estado,
@@ -242,7 +246,7 @@ VALUES
      :nav_nome, :nav_rg, :nav_ts,
      :possui_carteira, :carteira_valida, :num_carteira,
      :esp_carro, :esp_moto, :esp_moto_ren,
-     :participacao, :valor)";
+     :participacao, :forma_pagamento, :valor)";
 
 try {
     $pdo = db();
@@ -273,8 +277,9 @@ try {
         ':esp_carro'         => $campos['esp_carro']        ?: null,
         ':esp_moto'          => $campos['esp_moto']         ?: null,
         ':esp_moto_ren'      => $campos['esp_moto_renovacao'] ?: null,
-        ':participacao'  => (int)$campos['participacao'],
-        ':valor'         => $valor,
+        ':participacao'     => (int)$campos['participacao'],
+        ':forma_pagamento'  => $campos['forma_pagamento'],
+        ':valor'            => $valor,
     ]);
     $inscricaoId = (int)$pdo->lastInsertId();
 } catch (PDOException $e) {
@@ -313,4 +318,8 @@ $_SESSION['inscricao_id']    = $inscricaoId;
 $_SESSION['inscricao_nome']  = $campos['nome'];
 $_SESSION['inscricao_valor'] = $valor;
 
-redirect('pagamento.php?id=' . $inscricaoId);
+if ($campos['forma_pagamento'] === 'pix') {
+    redirect('pagamento-pix.php?id=' . $inscricaoId);
+} else {
+    redirect('pagamento.php?id=' . $inscricaoId);
+}
