@@ -204,27 +204,55 @@ function qStr(array $extra = []): string {
     <div class="row mb-4">
         <?php
         $veiculoLabels = ['Carro' => '🚗 Carro / UTV', 'Moto' => '🏍 Moto', 'Quadriciclo' => '🚜 Quadriciclo'];
+        uksort($veiculoLabels, fn($a, $b) => ($statsVeiculo[$b] ?? 0) <=> ($statsVeiculo[$a] ?? 0));
         foreach ($veiculoLabels as $vKey => $vLabel):
             if (empty($statsCategoria[$vKey])) continue;
+            $cats    = $statsCategoria[$vKey];
+            $colId   = 'cat-' . strtolower($vKey);
+            $total   = count($cats);
         ?>
         <div class="col-md-4">
             <div class="section-title"><?= $vLabel ?></div>
-            <table class="table table-sm cat-table mb-3">
+            <table class="table table-sm cat-table mb-0">
                 <thead><tr><th>Categoria</th><th class="text-right">Qtd</th></tr></thead>
                 <tbody>
-                <?php foreach ($statsCategoria[$vKey] as $cat): ?>
+                <?php foreach (array_slice($cats, 0, 3) as $cat): ?>
                     <tr>
                         <td><?= htmlspecialchars($cat['categoria'] ?: '(não informada)') ?></td>
-                        <td class="text-right">
-                            <span class="qtd-badge"><?= (int)$cat['qtd'] ?></span>
-                        </td>
+                        <td class="text-right"><span class="qtd-badge"><?= (int)$cat['qtd'] ?></span></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
+                <?php if ($total > 3): ?>
+                <tbody id="<?= $colId ?>" style="display:none">
+                <?php foreach (array_slice($cats, 3) as $cat): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($cat['categoria'] ?: '(não informada)') ?></td>
+                        <td class="text-right"><span class="qtd-badge"><?= (int)$cat['qtd'] ?></span></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+                <?php endif; ?>
             </table>
+            <?php if ($total > 3): ?>
+            <button type="button" onclick="toggleCat('<?= $colId ?>', this)"
+                    style="background:none;border:none;color:#2980b9;font-size:12px;cursor:pointer;padding:4px 0;margin-bottom:12px">
+                ▼ Ver todas (<?= $total ?> categorias)
+            </button>
+            <?php else: ?>
+            <div style="margin-bottom:12px"></div>
+            <?php endif; ?>
         </div>
         <?php endforeach; ?>
     </div>
+    <script>
+    function toggleCat(id, btn) {
+        var el = document.getElementById(id);
+        var open = el.style.display !== 'none';
+        el.style.display = open ? 'none' : '';
+        btn.innerHTML = open ? '▼ Ver todas' : '▲ Fechar';
+    }
+    </script>
 
     <!-- Filtros -->
     <form method="GET" class="row g-2 mb-3 align-items-end">
