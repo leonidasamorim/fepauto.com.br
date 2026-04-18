@@ -134,12 +134,16 @@ function qStr(array $extra = []): string {
 <body>
 
 <!-- Navbar -->
-<nav class="navbar-admin d-flex justify-content-between align-items-center">
-    <span><strong>FEPAUTO</strong> – Painel Administrativo</span>
-    <div>
-        <span class="me-3" style="margin-right:16px">
-            Olá, <strong><?= htmlspecialchars($_SESSION['admin_user']) ?></strong>
+<nav class="navbar-admin" style="display:flex;justify-content:space-between;align-items:center">
+    <span style="display:flex;align-items:center;gap:12px;line-height:1.2">
+        <img src="../logo.jpeg" alt="FEPAUTO" style="height:44px;border-radius:4px;display:block"/>
+        <span>
+            <strong style="font-size:16px">FEPAUTO</strong><br>
+            <span style="font-size:12px;color:#aaa">Painel Administrativo</span>
         </span>
+    </span>
+    <div style="display:flex;align-items:center;gap:16px">
+        <span>Olá, <strong><?= htmlspecialchars($_SESSION['admin_user']) ?></strong></span>
         <a href="logout.php">Sair</a>
     </div>
 </nav>
@@ -248,12 +252,12 @@ function qStr(array $extra = []): string {
             </select>
         </div>
         <div class="col-md-2">
-            <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+            <label class="form-label">&nbsp;</label>
+           <div class="form-controlx"> <button type="submit" class="btn btn-primary w-100">Filtrar</button> 
+           <a href="index.php" class="btn btn-secondary w-100">Limpar</a></div>
         </div>
-        <div class="col-md-2">
-            <a href="index.php" class="btn btn-secondary w-100">Limpar</a>
-        </div>
-    </form>
+       
+    </form><br>
 
     <!-- Mensagens de feedback -->
     <?php if (!empty($_GET['msg'])): ?>
