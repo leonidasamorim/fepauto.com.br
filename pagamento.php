@@ -55,6 +55,8 @@ if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
         'notificationURL'     => 'http://' . ($_SERVER['HTTP_HOST'] ?? 'fepauto.com.br') . '/pagseguro-notificacao.php',
     ]);
 
+   
+
     $ch = curl_init($apiUrl);
     curl_setopt_array($ch, [
         CURLOPT_POST           => true,
@@ -68,22 +70,32 @@ if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    if ($httpCode === 200 && $response) {
-        $xml = simplexml_load_string($response);
+    if ($response) {
+        $xml  = simplexml_load_string($response);
         $code = (string)($xml->code ?? '');
+
         if ($code) {
             $redirectBase = PAGSEGURO_SANDBOX
                 ? 'https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html'
                 : 'https://pagseguro.uol.com.br/v2/checkout/payment.html';
             $pagseguroUrl = $redirectBase . '?code=' . $code;
 
-            // Salva o code
             db()->prepare('UPDATE inscricoes SET pagseguro_code = ? WHERE id = ?')
                ->execute([$code, $ins['id']]);
+        } else {
+            // Extrai mensagem de erro do XML do PagSeguro
+            $erroMsg = '';
+            if (isset($xml->error)) {
+                foreach ($xml->error as $e) {
+                    $erroMsg .= '[' . (string)$e->code . '] ' . (string)$e->message . ' ';
+                }
+            }
+            $pagseguroErro = $erroMsg ?: 'Erro ao iniciar pagamento no PagSeguro.';
+            error_log("PagSeguro HTTP {$httpCode}: {$response}");
         }
     } else {
         $pagseguroErro = 'Não foi possível conectar ao PagSeguro. Tente novamente em instantes.';
-        error_log("PagSeguro HTTP {$httpCode}: {$response}");
+        error_log("PagSeguro HTTP {$httpCode}: sem resposta");
     }
 }
 ?>
@@ -124,8 +136,8 @@ if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
 
     <div class="section pt-4 pb-10">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-8 col-lg-12">
                     <div class="card-resumo">
 
                         <h3>Resumo da Inscrição</h3>

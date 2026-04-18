@@ -126,7 +126,7 @@ $chaveFormatada = preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '$1.$2
 <div class="container">
     <div class="card-pix">
         <div class="card-pix-header">
-            <h2>Pagamento via PIX</h2>
+            <h2 class="mb-0 white">Pagamento via PIX</h2>
             <p><?= EVENT_NAME ?> &nbsp;·&nbsp; Protocolo <?= $protocolo ?></p>
         </div>
         <div class="card-pix-body">

@@ -15,14 +15,14 @@ define('MAIL_SMTP_USER',  'noreply@fepauto.com.br');
 define('MAIL_SMTP_PASS',  '1=Xv57*oMV!b');
 
 // ─── PagSeguro ────────────────────────────────────────────────────────────────
-define('PAGSEGURO_EMAIL',    'rallyedosol2015@gmail.com');
-define('PAGSEGURO_TOKEN',    '5CA2A1DB720E4FC18B16D776C29D73E4');       // preencha com seu token da conta PagSeguro
+define('PAGSEGURO_EMAIL',    'pagseguro.leonidas@gmail.com');
+define('PAGSEGURO_TOKEN',    '');       // preencha com seu token da conta PagSeguro
 define('PAGSEGURO_SANDBOX',  false);     // true = sandbox | false = produção
 
 // ─── PIX ─────────────────────────────────────────────────────────────────────
-define('PIX_CHAVE',   '15753536000155');       // CNPJ sem pontuação (chave PIX)
-define('PIX_TITULAR', 'FEPAUTO');
-define('PIX_BANCO',   'Banco do Brasil');
+define('PIX_CHAVE',   '03.143.496/0001-40');       // CNPJ sem pontuação (chave PIX)
+define('PIX_TITULAR', 'FEDERAÇÃO PARAENSE DE MOTOCICLISMO');
+define('PIX_BANCO',   'CAIXA ECONOMICA FEDERAL');
 
 // ─── Evento ───────────────────────────────────────────────────────────────────
 define('EVENT_NAME',  'XXVI Rallye do Sol 2026');
