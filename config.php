@@ -1,10 +1,18 @@
 <?php
 // ─── Banco de dados ───────────────────────────────────────────────────────────
-define('DB_HOST', 'db');          // nome do serviço no docker-compose
-define('DB_PORT', '3306');
-define('DB_NAME', 'rallye_inscricoes');
-define('DB_USER', 'rallye');
-define('DB_PASS', 'rallye123');
+if (($_SERVER['HTTP_HOST'] ?? '') === 'fepauto.com.br' || ($_SERVER['HTTP_HOST'] ?? '') === 'www.fepauto.com.br') {
+    define('DB_HOST', 'localhost');
+    define('DB_PORT', '3306');
+    define('DB_NAME', 'u927543591_fepauto');
+    define('DB_USER', 'u927543591_fepauto');
+    define('DB_PASS', 'nkdOr!NY~8');
+} else {
+    define('DB_HOST', 'db');
+    define('DB_PORT', '3306');
+    define('DB_NAME', 'rallye_inscricoes');
+    define('DB_USER', 'rallye');
+    define('DB_PASS', 'rallye123');
+}
 
 // ─── E-mail ───────────────────────────────────────────────────────────────────
 define('MAIL_FROM',       'noreply@fepauto.com.br');
