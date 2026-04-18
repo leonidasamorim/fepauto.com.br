@@ -144,9 +144,25 @@ $chaveFormatada = preg_replace('/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/', '$1.$2
 
             <?php else: ?>
 
-                <!-- Valor -->
+                <!-- Detalhamento de valores -->
+                <?php
+                $vInscr = (float)($ins['valor_inscricao'] ?? $ins['valor']);
+                $vCart  = (float)($ins['valor_carteira']  ?? 0);
+                ?>
+                <?php if ($vCart > 0): ?>
+                <table style="width:100%;font-size:14px;margin-bottom:12px;border-collapse:collapse">
+                    <tr>
+                        <td style="padding:6px 0;color:#555">Valor da inscrição</td>
+                        <td style="padding:6px 0;text-align:right">R$ <?= number_format($vInscr, 2, ',', '.') ?></td>
+                    </tr>
+                    <tr style="border-top:1px solid #eee">
+                        <td style="padding:6px 0;color:#555">Carteira / Renovação</td>
+                        <td style="padding:6px 0;text-align:right">R$ <?= number_format($vCart, 2, ',', '.') ?></td>
+                    </tr>
+                </table>
+                <?php endif; ?>
                 <div class="valor-box">
-                    <small>Valor a pagar</small>
+                    <small>Total a pagar</small>
                     <strong>R$ <?= $valor ?></strong>
                 </div>
 

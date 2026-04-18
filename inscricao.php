@@ -65,22 +65,25 @@ $csrf = $_SESSION['csrf_token'];
                                 <thead>
                                 <tr>
                                     <th>Veículo</th>
-                                    <th>Até 30/04/2026</th>
-                                    <th>01/05 – 31/05/2026</th>
-                                    <th>01/06 – 30/06/2026</th>
-                                    <th>01/07 – 20/07/2026</th>
+                                    <th>23/04 – 31/05</th>
+                                    <th>01/06 – 15/06</th>
+                                    <th>16/06 – 30/06</th>
+                                    <th>01/07 – 15/07</th>
+                                    <th>16/07 – 22/07</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <th>Carro / UTV</th>
-                                    <td>R$ 280,00</td><td>R$ 300,00</td>
                                     <td>R$ 320,00</td><td>R$ 340,00</td>
+                                    <td>R$ 350,00</td><td>R$ 360,00</td>
+                                    <td>R$ 380,00</td>
                                 </tr>
                                 <tr>
                                     <th>Quadriciclo / Moto</th>
-                                    <td>R$ 175,00</td><td>R$ 195,00</td>
-                                    <td>R$ 215,00</td><td>R$ 235,00</td>
+                                    <td>R$ 220,00</td><td>R$ 240,00</td>
+                                    <td>R$ 250,00</td><td>R$ 260,00</td>
+                                    <td>R$ 280,00</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -254,9 +257,9 @@ $csrf = $_SESSION['csrf_token'];
                                 </div>
                                 <div class="col-md-6">
                                     <label>TIPO SANGUÍNEO <span class="required">*</span></label>
-                                    <div class="form-wrap" style="padding-top:6px">
+                                    <div class="form-wrap" style="display:flex;flex-wrap:wrap;gap:6px 14px;padding-top:6px">
                                         <?php foreach (['A+','A-','B+','B-','AB+','AB-','O+','O-'] as $ts): ?>
-                                            <label class="mr-3" style="font-weight:normal;">
+                                            <label style="font-weight:normal;white-space:nowrap;margin:0;display:inline-flex;align-items:center;gap:4px">
                                                 <input type="radio" name="fTipoSangue" value="<?= $ts ?>"
                                                        required <?= oldIs('fTipoSangue', $ts) ?>/>
                                                 <?= $ts ?>
@@ -313,9 +316,9 @@ $csrf = $_SESSION['csrf_token'];
                                 </div>
                                 <div class="col-md-4">
                                     <label>TIPO SANGUÍNEO <span class="required">*</span></label>
-                                    <div class="form-wrap" style="padding-top:6px">
+                                    <div class="form-wrap" style="display:flex;flex-wrap:wrap;gap:6px 14px;padding-top:6px">
                                         <?php foreach (['A+','A-','B+','B-','AB+','AB-','O+','O-'] as $ts): ?>
-                                            <label class="mr-2" style="font-weight:normal;">
+                                            <label style="font-weight:normal;white-space:nowrap;margin:0;display:inline-flex;align-items:center;gap:4px">
                                                 <input type="radio" name="fTipoSangueNavegador"
                                                        class="fTipoSangueNavegador" value="<?= $ts ?>"
                                                        <?= oldIs('fTipoSangueNavegador', $ts) ?>/>
@@ -418,6 +421,47 @@ $csrf = $_SESSION['csrf_token'];
                                                 Renovação
                                             </option>
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Valor carteira nova – Carro -->
+                            <div id="valor-carteira-carro" class="row mt-1" style="display:none">
+                                <div class="col-md-12">
+                                    <div class="alert alert-info mb-1">
+                                        <strong>+ Carteira nova (Carro/UTV):</strong>
+                                        R$ <?= number_format(CARTEIRA_CARRO, 2, ',', '.') ?> será somado ao valor da inscrição.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Valor carteira nova – Moto/Quadriciclo -->
+                            <div id="valor-carteira-moto-quadriciculo" class="row mt-1" style="display:none">
+                                <div class="col-md-12">
+                                    <div class="alert alert-info mb-1">
+                                        <strong>+ Carteira nova (Moto/Quadriciclo):</strong>
+                                        R$ <?= number_format(CARTEIRA_MOTO, 2, ',', '.') ?> será somado ao valor da inscrição.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Valor renovação – Carro -->
+                            <div id="valor-carteira-carro-renovacao" class="row mt-1" style="display:none">
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning mb-1">
+                                        <strong>+ Renovação de Carteira (Carro/UTV):</strong>
+                                        R$ <?= number_format(CARTEIRA_CARRO_RENOVACAO, 2, ',', '.') ?> será somado ao valor da inscrição.
+                                        <small class="d-block mt-1">⚠ Valor exclusivo para as categorias <strong>PTRR1</strong> e <strong>PNRR</strong>.</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Valor renovação – Moto/Quadriciclo -->
+                            <div id="valor-carteira-moto-quadriciculo-renovacao" class="row mt-1" style="display:none">
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning mb-1">
+                                        <strong>+ Renovação de Carteira (Moto/Quadriciclo):</strong>
+                                        R$ <?= number_format(CARTEIRA_MOTO_RENOVACAO, 2, ',', '.') ?> será somado ao valor da inscrição.
                                     </div>
                                 </div>
                             </div>

@@ -41,6 +41,8 @@ CREATE TABLE IF NOT EXISTS inscricoes (
     -- Financeiro
     forma_pagamento           ENUM('pix','cartao') NOT NULL DEFAULT 'pix',
     valor                     DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    valor_inscricao           DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    valor_carteira            DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     status_pagamento          ENUM('pendente','pago','cancelado') NOT NULL DEFAULT 'pendente',
     pagseguro_code            VARCHAR(100)  DEFAULT NULL,
     pagseguro_transaction_id  VARCHAR(100)  DEFAULT NULL,

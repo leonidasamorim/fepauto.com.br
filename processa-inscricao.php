@@ -48,7 +48,10 @@ function calcularValor(string $veiculo): float {
 }
 
 function emailConfirmacao(array $d): string {
-    $valor = number_format((float)$d['valor'], 2, ',', '.');
+    $valorTotal    = number_format((float)$d['valor'], 2, ',', '.');
+    $valorInscr    = number_format((float)$d['valor_inscricao'], 2, ',', '.');
+    $valorCart     = (float)$d['valor_carteira'];
+    $valor         = $valorTotal; // mantém compatibilidade com uso abaixo
     $status = match ($d['veiculo']) {
         'Carro' => "Carro / UTV",
         default => $d['veiculo'],
@@ -103,10 +106,16 @@ function emailConfirmacao(array $d): string {
                     <td style='padding:8px;border:1px solid #ddd'><strong>E-mail</strong></td>
                     <td style='padding:8px;border:1px solid #ddd'>" . s($d['email']) . "</td></tr>
                 {$nav}
+                <tr><td style='padding:8px;border:1px solid #ddd'><strong>Valor Inscrição</strong></td>
+                    <td style='padding:8px;border:1px solid #ddd'>R$ {$valorInscr}</td></tr>" .
+                ($valorCart > 0 ? "
+                <tr style='background:#f8f8f8'>
+                    <td style='padding:8px;border:1px solid #ddd'><strong>Valor Carteira</strong></td>
+                    <td style='padding:8px;border:1px solid #ddd'>R$ " . number_format($valorCart, 2, ',', '.') . "</td></tr>" : "") . "
                 <tr style='background:#e8f5e9'>
-                    <td style='padding:8px;border:1px solid #ddd'><strong>Valor</strong></td>
+                    <td style='padding:8px;border:1px solid #ddd'><strong>Total a Pagar</strong></td>
                     <td style='padding:8px;border:1px solid #ddd;font-size:18px;color:#2e7d32'>
-                        <strong>R$ {$valor}</strong></td></tr>
+                        <strong>R$ {$valorTotal}</strong></td></tr>
             </table>
             <p style='margin-top:20px'>
                 <a href='http://" . ($_SERVER['HTTP_HOST'] ?? 'fepauto.com.br') . "/pagamento.php?id=" . $d['id'] . "'
@@ -229,7 +238,20 @@ try {
 
 // ─── Calcula valor ────────────────────────────────────────────────────────────
 
-$valor = calcularValor($campos['veiculo']);
+$valorInscricao = calcularValor($campos['veiculo']);
+
+$valorCarteira = 0.00;
+$isCarro = ($campos['veiculo'] === 'Carro');
+
+if ($campos['possui_carteira'] === '0') {
+    // Não possui carteira → nova carteira
+    $valorCarteira = $isCarro ? CARTEIRA_CARRO : CARTEIRA_MOTO;
+} elseif ($campos['possui_carteira'] === '1' && $campos['carteira_valida'] === '0') {
+    // Possui mas vencida → renovação
+    $valorCarteira = $isCarro ? CARTEIRA_CARRO_RENOVACAO : CARTEIRA_MOTO_RENOVACAO;
+}
+
+$valor = $valorInscricao + $valorCarteira;
 
 // ─── Insere no banco ──────────────────────────────────────────────────────────
 
@@ -241,7 +263,7 @@ $sql = "INSERT INTO inscricoes
      navegador_nome, navegador_rg, tipo_sangue_navegador,
      possui_carteira, carteira_valida, num_carteira,
      especificar_carro, especificar_moto, especificar_moto_renovacao,
-     participacao, forma_pagamento, valor)
+     participacao, forma_pagamento, valor, valor_inscricao, valor_carteira)
 VALUES
     (:nome, :cpf, :rg, :dt_nasc, :nome_pai, :nome_mae,
      :cep, :endereco, :bairro, :cidade, :estado,
@@ -250,7 +272,7 @@ VALUES
      :nav_nome, :nav_rg, :nav_ts,
      :possui_carteira, :carteira_valida, :num_carteira,
      :esp_carro, :esp_moto, :esp_moto_ren,
-     :participacao, :forma_pagamento, :valor)";
+     :participacao, :forma_pagamento, :valor, :valor_inscricao, :valor_carteira)";
 
 try {
     $pdo = db();
@@ -284,6 +306,8 @@ try {
         ':participacao'     => (int)$campos['participacao'],
         ':forma_pagamento'  => $campos['forma_pagamento'],
         ':valor'            => $valor,
+        ':valor_inscricao'  => $valorInscricao,
+        ':valor_carteira'   => $valorCarteira,
     ]);
     $inscricaoId = (int)$pdo->lastInsertId();
 } catch (PDOException $e) {
@@ -305,6 +329,8 @@ $emailData = [
     'veiculo'             => $campos['veiculo'],
     'categoria'           => $campos['categoria'],
     'valor'               => $valor,
+    'valor_inscricao'     => $valorInscricao,
+    'valor_carteira'      => $valorCarteira,
     'navegador_nome'      => $campos['nav_nome'],
     'navegador_rg'        => $campos['nav_rg'],
     'tipo_sangue_navegador' => $campos['nav_tipo_sangue'],

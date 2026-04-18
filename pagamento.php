@@ -160,9 +160,29 @@ if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
                             </tr>
                         </table>
 
-                        <div class="text-center my-4">
-                            <p class="mb-1">Valor a pagar</p>
-                            <div class="valor-destaque">R$ <?= $valor ?></div>
+                        <div class="my-4">
+                            <?php
+                            $vInscr = (float)($ins['valor_inscricao'] ?? $ins['valor']);
+                            $vCart  = (float)($ins['valor_carteira']  ?? 0);
+                            ?>
+                            <table class="table table-sm table-bordered mb-2">
+                                <tr>
+                                    <td style="width:60%">Valor da inscrição</td>
+                                    <td class="text-right">R$ <?= number_format($vInscr, 2, ',', '.') ?></td>
+                                </tr>
+                                <?php if ($vCart > 0): ?>
+                                <tr>
+                                    <td>Carteira / Renovação</td>
+                                    <td class="text-right">R$ <?= number_format($vCart, 2, ',', '.') ?></td>
+                                </tr>
+                                <?php endif; ?>
+                                <tr style="background:#e8f5e9;font-weight:700">
+                                    <td>Total a pagar</td>
+                                    <td class="text-right" style="color:#27ae60;font-size:1.2rem">
+                                        R$ <?= $valor ?>
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
 
                         <?php if ($ins['status_pagamento'] === 'pago'): ?>
