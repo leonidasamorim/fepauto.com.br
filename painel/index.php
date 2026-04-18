@@ -8,7 +8,7 @@ $filtroStatus  = $_GET['status']  ?? '';
 $filtroBusca   = trim($_GET['busca'] ?? '');
 $filtroVeiculo = $_GET['veiculo'] ?? '';
 $pagina        = max(1, (int)($_GET['p'] ?? 1));
-$porPagina     = 20;
+$porPagina     = 100;
 $offset        = ($pagina - 1) * $porPagina;
 
 $where  = ['1=1'];
@@ -396,9 +396,7 @@ function qStr(array $extra = []): string {
     </nav>
     <?php endif; ?>
 
-    <p class="text-muted text-center">
-        Total: <strong><?= $total ?></strong> inscrição(ões)
-    </p>
+   
 </div>
 
 <script src="../inscricao-inc/js/jquery.min.js"></script>
