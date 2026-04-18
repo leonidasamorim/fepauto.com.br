@@ -23,8 +23,10 @@ if ($filtroVeiculo !== '') {
     $params[':veiculo'] = $filtroVeiculo;
 }
 if ($filtroBusca !== '') {
-    $where[]  = '(nome LIKE :busca OR cpf LIKE :busca OR email LIKE :busca)';
-    $params[':busca'] = '%' . $filtroBusca . '%';
+    $where[]  = '(nome LIKE :busca1 OR cpf LIKE :busca2 OR email LIKE :busca3)';
+    $params[':busca1'] = '%' . $filtroBusca . '%';
+    $params[':busca2'] = '%' . $filtroBusca . '%';
+    $params[':busca3'] = '%' . $filtroBusca . '%';
 }
 
 $whereSQL = implode(' AND ', $where);
@@ -62,6 +64,27 @@ try {
     foreach ($statsStmt->fetchAll() as $row) {
         $stats[$row['status_pagamento']] = $row;
     }
+
+    // Totais por veículo
+    $veiculoRows = db()->query(
+        "SELECT veiculo, COUNT(*) as qtd FROM inscricoes GROUP BY veiculo"
+    )->fetchAll();
+    $statsVeiculo = [];
+    foreach ($veiculoRows as $row) {
+        $statsVeiculo[$row['veiculo']] = (int)$row['qtd'];
+    }
+
+    // Totais por categoria (agrupado por veículo)
+    $categoriaRows = db()->query(
+        "SELECT veiculo, categoria, COUNT(*) as qtd
+         FROM inscricoes
+         GROUP BY veiculo, categoria
+         ORDER BY veiculo, qtd DESC"
+    )->fetchAll();
+    $statsCategoria = [];
+    foreach ($categoriaRows as $row) {
+        $statsCategoria[$row['veiculo']][] = $row;
+    }
 } catch (PDOException $e) {
     error_log('Painel index: ' . $e->getMessage());
     $inscricoes = [];
@@ -96,6 +119,16 @@ function qStr(array $extra = []): string {
         .badge-cancelado { background:#c0392b; color:#fff; padding:3px 8px; border-radius:10px; font-size:12px; }
         .table th { background:#1a1a2e; color:#fff; }
         .btn-sm { padding:3px 8px; font-size:12px; }
+        .card-veiculo { border-radius:8px; padding:16px 20px; color:#fff; margin-bottom:16px; }
+        .stat-carro       { background:#2980b9; }
+        .stat-moto        { background:#8e44ad; }
+        .stat-quadriciclo { background:#16a085; }
+        .cat-table th { font-size:12px; background:#f0f0f0; color:#333; padding:6px 10px; }
+        .cat-table td { font-size:13px; padding:5px 10px; }
+        .cat-table .qtd-badge { background:#1a1a2e; color:#fff; border-radius:10px;
+                                padding:2px 8px; font-size:12px; font-weight:700; }
+        .section-title { font-size:14px; font-weight:700; color:#555;
+                         text-transform:uppercase; letter-spacing:.5px; margin-bottom:8px; }
     </style>
 </head>
 <body>
@@ -112,7 +145,7 @@ function qStr(array $extra = []): string {
 </nav>
 
 <div class="container-fluid mt-4">
-
+    <br>
     <!-- Cards de resumo -->
     <div class="row">
         <div class="col-md-4">
@@ -136,6 +169,57 @@ function qStr(array $extra = []): string {
                 <small>R$ <?= number_format((float)($stats['cancelado']['total'] ?? 0), 2, ',', '.') ?></small>
             </div>
         </div>
+    </div>
+
+    <!-- Cards por veículo -->
+    <div class="row mt-2">
+        <div class="col-md-4">
+            <div class="card-veiculo stat-carro">
+                <h5>🚗 Carro / UTV</h5>
+                <h2><?= $statsVeiculo['Carro'] ?? 0 ?></h2>
+                <small>inscrições</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-veiculo stat-moto">
+                <h5>🏍 Moto</h5>
+                <h2><?= $statsVeiculo['Moto'] ?? 0 ?></h2>
+                <small>inscrições</small>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card-veiculo stat-quadriciclo">
+                <h5>🚜 Quadriciclo</h5>
+                <h2><?= $statsVeiculo['Quadriciclo'] ?? 0 ?></h2>
+                <small>inscrições</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Inscrições por categoria -->
+    <div class="row mb-4">
+        <?php
+        $veiculoLabels = ['Carro' => '🚗 Carro / UTV', 'Moto' => '🏍 Moto', 'Quadriciclo' => '🚜 Quadriciclo'];
+        foreach ($veiculoLabels as $vKey => $vLabel):
+            if (empty($statsCategoria[$vKey])) continue;
+        ?>
+        <div class="col-md-4">
+            <div class="section-title"><?= $vLabel ?></div>
+            <table class="table table-sm cat-table mb-3">
+                <thead><tr><th>Categoria</th><th class="text-right">Qtd</th></tr></thead>
+                <tbody>
+                <?php foreach ($statsCategoria[$vKey] as $cat): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($cat['categoria'] ?: '(não informada)') ?></td>
+                        <td class="text-right">
+                            <span class="qtd-badge"><?= (int)$cat['qtd'] ?></span>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+        <?php endforeach; ?>
     </div>
 
     <!-- Filtros -->

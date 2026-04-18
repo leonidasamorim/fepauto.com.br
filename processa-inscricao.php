@@ -57,7 +57,7 @@ function emailConfirmacao(array $d): string {
         default => $d['veiculo'],
     };
     $isPix   = ($d['forma_pagamento'] ?? '') === 'pix';
-    $titulo  = $isPix ? 'Inscrição em andamento!' : 'Inscrição Confirmada!';
+    $titulo  = $isPix ? 'Inscrição em andamento!' : 'Inscrição emandamento!';
     $avisoTxt = $isPix
         ? 'Sua inscrição foi recebida. Para garantir sua vaga, realize o pagamento via PIX e envie o comprovante para <strong>fepauto@fepauto.com.br</strong>.'
         : 'Sua inscrição estará confirmada somente após a confirmação do pagamento.';
@@ -339,7 +339,7 @@ $emailData = [
 
 Mailer::send(
     $campos['email'],
-    'Inscrição confirmada – ' . EVENT_NAME,
+    'Inscrição em andamento – ' . EVENT_NAME,
     emailConfirmacao($emailData)
 );
 

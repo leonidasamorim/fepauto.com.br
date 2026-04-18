@@ -126,15 +126,15 @@ function rowBool(string $label, mixed $value): string {
     <!-- Ações rápidas -->
     <div class="card">
         <h5>Alterar Status</h5>
-        <div class="d-flex gap-2">
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:8px 0">
             <?php foreach (['pago' => 'success', 'pendente' => 'warning', 'cancelado' => 'danger'] as $st => $cor): ?>
                 <?php if ($ins['status_pagamento'] !== $st): ?>
-                <form method="POST" action="atualiza-status.php"
+                <form method="POST" action="atualiza-status.php" style="margin:0"
                       onsubmit="return confirm('Alterar status para <?= strtoupper($st) ?>?')">
                     <input type="hidden" name="id" value="<?= $ins['id'] ?>"/>
                     <input type="hidden" name="status" value="<?= $st ?>"/>
                     <input type="hidden" name="redirect" value="detalhes.php?id=<?= $ins['id'] ?>"/>
-                    <button type="submit" class="btn btn-<?= $cor ?>" style="margin-right:8px">
+                    <button type="submit" class="btn btn-<?= $cor ?>">
                         Marcar como <?= strtoupper($st) ?>
                     </button>
                 </form>
