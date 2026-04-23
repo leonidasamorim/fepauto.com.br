@@ -106,24 +106,32 @@
             letter-spacing: 1px;
         }
 
+        @keyframes pulse-btn {
+            0%   { box-shadow: 0 8px 30px rgba(245,166,35,0.45), 0 0 0 0 rgba(245,166,35,0.55); }
+            60%  { box-shadow: 0 8px 30px rgba(245,166,35,0.45), 0 0 0 18px rgba(245,166,35,0); }
+            100% { box-shadow: 0 8px 30px rgba(245,166,35,0.45), 0 0 0 0 rgba(245,166,35,0); }
+        }
+
         .btn-inscricao {
             display: inline-block;
             background: linear-gradient(135deg, #f5a623 0%, #e8490a 100%);
             color: #fff;
             font-family: 'Poppins', sans-serif;
             font-weight: 800;
-            font-size: 1.25rem;
-            padding: 18px 52px;
+            font-size: 1.5rem;
+            padding: 22px 64px;
             border-radius: 50px;
             text-decoration: none;
             box-shadow: 0 8px 30px rgba(245,166,35,0.45);
-            transition: transform 0.15s, box-shadow 0.15s;
+            animation: pulse-btn 1.8s ease-out infinite;
+            transition: transform 0.15s;
             letter-spacing: 0.5px;
         }
 
         .btn-inscricao:hover {
             transform: translateY(-3px);
-            box-shadow: 0 14px 40px rgba(245,166,35,0.55);
+            animation: none;
+            box-shadow: 0 14px 40px rgba(245,166,35,0.65);
             color: #fff;
             text-decoration: none;
         }
@@ -328,7 +336,7 @@
 
         /* ── RESPONSIVE ── */
         @media (max-width: 576px) {
-            .btn-inscricao { font-size: 1.05rem; padding: 16px 36px; }
+            .btn-inscricao { font-size: 1.2rem; padding: 18px 40px; }
             .badges-wrap { gap: 12px; }
             .badge-item { min-width: 140px; padding: 16px 18px; }
         }
@@ -342,7 +350,7 @@
 
     <div class="hero-content">
         <p class="hero-edition">XXVI Edição &bull; 2026</p>
-        <h1 class="hero-title">Rallye do <span>Sol</span></h1>
+        <h1 class="hero-title">Rallye do <span>Sol 2026</span></h1>
         <p class="hero-location">Benevides &rarr; Salinópolis &bull; Pará</p>
         <div class="hero-date">&#127942; Corrida: 25 de Julho de 2026</div>
         <br>
@@ -379,51 +387,12 @@
 </section>
 
 <!-- ── TABELA DE PREÇOS ── -->
-<section class="precos-section">
-    <p class="section-label">Valores por lote</p>
-    <h2 class="section-title">Tabela de Inscrição</h2>
 
-    <div class="table-wrap">
-        <table class="table-precos">
-            <thead>
-                <tr>
-                    <th>Veículo</th>
-                    <th>23/04 – 31/05</th>
-                    <th>01/06 – 15/06</th>
-                    <th>16/06 – 30/06</th>
-                    <th>01/07 – 15/07</th>
-                    <th>16/07 – 22/07</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $lotes = PRECOS;
-                $veiculos = [
-                    'Carro / UTV'    => 'carro',
-                    'Quadriciclo'    => 'quadriciclo',
-                    'Moto / Iniciante' => 'moto',
-                ];
-                $icons = ['Carro / UTV' => '&#128664;', 'Quadriciclo' => '&#129683;', 'Moto / Iniciante' => '&#127949;'];
-                foreach ($veiculos as $label => $campo):
-                ?>
-                <tr>
-                    <th><?= $icons[$label] ?> <span class="icon"></span><?= $label ?></th>
-                    <?php foreach ($lotes as $lote): ?>
-                    <td>R$ <?= number_format($lote[$campo], 2, ',', '.') ?></td>
-                    <?php endforeach; ?>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-    <p class="table-note">* Valores aumentam conforme lote. Garanta o menor preço antecipando sua inscrição.</p>
-</section>
 
 <!-- ── CTA BOTTOM ── -->
 <section class="cta-section">
     <h2 class="cta-title">Inscrições <span>Abertas!</span></h2>
     <p class="cta-sub">Não fique de fora — vagas limitadas por categoria.</p>
-    <a href="inscricao.php" class="btn-inscricao">GARANTIR MINHA VAGA</a>
 </section>
 
 <!-- ── REDES SOCIAIS ── -->
