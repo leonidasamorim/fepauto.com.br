@@ -42,11 +42,22 @@ $csrf = $_SESSION['csrf_token'];
     <div id="main">
 
         <!-- Banner -->
-        <div class="section section-bg-8">
-            <div class="container">
+        <div style="
+            width:100%;
+            background:url('banner.jpeg') no-repeat center center / cover;
+            position:relative;
+            min-height:220px;
+            display:flex;
+            align-items:flex-end;
+        ">
+            <div style="
+                position:absolute;inset:0;
+                background:linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.65) 100%);
+            "></div>
+            <div class="container" style="position:relative;z-index:1;padding-bottom:28px;">
                 <div class="row">
                     <div class="col-sm-12 text-center">
-                        <h2 style="text-shadow:2px 2px 8px #000;font-size:36px;color:#fff;"
+                        <h2 style="text-shadow:2px 2px 8px #000;font-size:36px;color:#fff;margin:0;"
                             class="page-title text-center">
                             Inscrição – XXVI Rallye do Sol 2026
                         </h2>
