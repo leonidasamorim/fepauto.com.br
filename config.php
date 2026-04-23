@@ -33,8 +33,8 @@ define('PIX_TITULAR', 'FEDERAÇÃO PARAENSE DE MOTOCICLISMO');
 define('PIX_BANCO',   'CAIXA ECONOMICA FEDERAL');
 
 // ─── Carteira da Federação ────────────────────────────────────────────────────
-define('CARTEIRA_CARRO',           192.00);
-define('CARTEIRA_CARRO_RENOVACAO', 482.00); // apenas categorias PTRR1 e PNRR
+define('CARTEIRA_CARRO',           214.00);
+define('CARTEIRA_CARRO_RENOVACAO', 528.00); // apenas categorias PTRR1 e PNRR
 define('CARTEIRA_MOTO',            400.00);
 define('CARTEIRA_MOTO_RENOVACAO',  400.00);
 
@@ -42,12 +42,12 @@ define('CARTEIRA_MOTO_RENOVACAO',  400.00);
 define('EVENT_NAME',  'XXVI Rallye do Sol 2026');
 define('EVENT_YEAR',  '2026');
 
-// ─── Tabela de preços (Carro/UTV | Moto/Quadriciclo) ─────────────────────────
-// Cada lote: ['ate' => 'AAAA-MM-DD', 'carro' => float, 'moto' => float]
+// ─── Tabela de preços (Carro/UTV | Quadriciclo | Moto Iniciante) ─────────────
+// Cada lote: ['ate' => 'AAAA-MM-DD', 'carro' => float, 'quadriciclo' => float, 'moto' => float]
 define('PRECOS', [
-    ['ate' => '2026-05-31', 'carro' => 320.00, 'moto' => 220.00],
-    ['ate' => '2026-06-15', 'carro' => 340.00, 'moto' => 240.00],
-    ['ate' => '2026-06-30', 'carro' => 350.00, 'moto' => 250.00],
-    ['ate' => '2026-07-15', 'carro' => 360.00, 'moto' => 260.00],
-    ['ate' => '2026-07-22', 'carro' => 380.00, 'moto' => 280.00],
+    ['ate' => '2026-05-31', 'carro' => 350.00, 'quadriciclo' => 250.00, 'moto' => 140.00],
+    ['ate' => '2026-06-15', 'carro' => 360.00, 'quadriciclo' => 260.00, 'moto' => 150.00],
+    ['ate' => '2026-06-30', 'carro' => 370.00, 'quadriciclo' => 270.00, 'moto' => 160.00],
+    ['ate' => '2026-07-15', 'carro' => 380.00, 'quadriciclo' => 280.00, 'moto' => 170.00],
+    ['ate' => '2026-07-22', 'carro' => 400.00, 'quadriciclo' => 300.00, 'moto' => 190.00],
 ]);

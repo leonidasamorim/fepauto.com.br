@@ -75,15 +75,27 @@ $csrf = $_SESSION['csrf_token'];
                                 <tbody>
                                 <tr>
                                     <th>Carro / UTV</th>
-                                    <td>R$ 320,00</td><td>R$ 340,00</td>
-                                    <td>R$ 350,00</td><td>R$ 360,00</td>
+                                    <td>R$ 350,00</td>
+                                    <td>R$ 360,00</td>
+                                    <td>R$ 370,00</td>
                                     <td>R$ 380,00</td>
+                                    <td>R$ 400,00</td>
                                 </tr>
                                 <tr>
-                                    <th>Quadriciclo / Moto</th>
-                                    <td>R$ 220,00</td><td>R$ 240,00</td>
-                                    <td>R$ 250,00</td><td>R$ 260,00</td>
+                                    <th>Quadriciclo</th>
+                                    <td>R$ 250,00</td>
+                                    <td>R$ 260,00</td>
+                                    <td>R$ 270,00</td>
                                     <td>R$ 280,00</td>
+                                    <td>R$ 300,00</td>
+                                </tr>
+                                 <tr>
+                                    <th>Moto / Iniciante</th>
+                                    <td>R$ 140,00</td>
+                                    <td>R$ 150,00</td>
+                                    <td>R$ 160,00</td>
+                                    <td>R$ 170,00</td>
+                                    <td>R$ 190,00</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -514,7 +526,11 @@ $csrf = $_SESSION['csrf_token'];
                                     <strong style="color:red">ATENÇÃO:</strong><br/>
                                     I. Envie cópia da Habilitação para o e-mail
                                     <strong>fepauto@fepauto.com.br</strong><br/>
-                                    II. No dia da entrega do kit do XXVI Rallye do Sol o inscrito deverá
+                                    <span id="v-atestado-carro" style="display:none">
+                                    II. Envie também o <strong>Atestado Médico</strong> para o e-mail
+                                    <strong>fepauto@fepauto.com.br</strong><br/>
+                                    </span>
+                                    III. No dia da entrega do kit do XXVI Rallye do Sol o inscrito deverá
                                     apresentar comprovante de pagamento.
                                 </div>
                             </div>

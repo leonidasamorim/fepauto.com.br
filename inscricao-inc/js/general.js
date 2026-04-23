@@ -16,6 +16,7 @@ $(document).ready(function () {
         $('#alert-possui-carteira').hide();
         $('#alert-nao-possui-carteira').hide();
         $('#v-atencao').hide();
+        $('#v-atestado-carro').hide();
 
         $('.fPossuiCarteira').prop('checked', false);
         $('.fCarteiraValida').prop('checked', false);
@@ -35,6 +36,7 @@ $(document).ready(function () {
             $('#fNavegadorRg').prop('required', true);
             $('.fTipoSangueNavegador').prop('required', true);
             $('#fCategoria').load('categoria-carro-v2.php');
+            $('#v-atestado-carro').show();
         }
 
         if (veiculo === 'Moto') {

@@ -36,15 +36,19 @@ function validarCpf(string $cpf): bool {
 }
 
 function calcularValor(string $veiculo): float {
+    $campo = match ($veiculo) {
+        'Carro'       => 'carro',
+        'Quadriciclo' => 'quadriciclo',
+        default       => 'moto',
+    };
     $hoje = date('Y-m-d');
     foreach (PRECOS as $lote) {
         if ($hoje <= $lote['ate']) {
-            return in_array($veiculo, ['Carro']) ? $lote['carro'] : $lote['moto'];
+            return $lote[$campo];
         }
     }
-    // Último lote como fallback
     $ultimo = end(PRECOS);
-    return in_array($veiculo, ['Carro']) ? $ultimo['carro'] : $ultimo['moto'];
+    return $ultimo[$campo];
 }
 
 function emailConfirmacao(array $d): string {
