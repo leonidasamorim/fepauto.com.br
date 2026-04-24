@@ -56,8 +56,7 @@ if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
         ]],
         'payment_methods' => [
             ['type' => 'CREDIT_CARD'],
-            ['type' => 'DEBIT_CARD'],
-            ['type' => 'BOLETO'],
+            ['type' => 'DEBIT_CARD']
         ],
         'redirect_url'      => $baseUrl . '/obrigado.php',
         'notification_urls' => [$baseUrl . '/pagseguro-notificacao.php'],
