@@ -10,6 +10,30 @@ require_once __DIR__ . '/db.php';
 $notificationCode = $_POST['notificationCode'] ?? '';
 $notificationType = $_POST['notificationType'] ?? '';
 
+ function gravar_request2(){
+	
+  @session_start();
+  $parametros="";
+  $parametros .= "GET----------------------------------------------------------------\n";
+  $parametros .= var_export($_GET, true);
+  $parametros .= "POST----------------------------------------------------------------\n";
+  $parametros .= var_export($_POST, true);
+  $parametros .= "SESSION----------------------------------------------------------------\n";
+  $parametros .= var_export($_SESSION, true);
+  $parametros .= "COOKIE----------------------------------------------------------------\n";
+  $parametros .= var_export($_COOKIE, true);
+  $parametros .= "SERVER----------------------------------------------------------------\n";
+  $parametros .= var_export($_SERVER, true);
+   //return $parametros;
+   	@file_put_contents("logs/". date("Ymd").'-'.date("His") ."_notification_pagseguro.txt", $parametros);
+
+	 return nl2br($parametros);
+
+}
+gravar_request2();
+
+
+
 if ($notificationType !== 'transaction' || empty($notificationCode)) {
     http_response_code(400);
     exit;
