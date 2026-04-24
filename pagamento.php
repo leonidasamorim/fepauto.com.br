@@ -29,14 +29,14 @@ if (!$ins) {
 $protocolo = '#' . str_pad((string)$ins['id'], 6, '0', STR_PAD_LEFT);
 $valor      = number_format((float)$ins['valor'], 2, ',', '.');
 
-// ─── PagBank Orders API v4 ────────────────────────────────────────────────────
+// ─── PagBank Checkouts API v4 ────────────────────────────────────────────────────
 $pagseguroUrl  = null;
 $pagseguroErro = null;
 
 if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
     $apiUrl = PAGSEGURO_SANDBOX
-        ? 'https://sandbox.api.pagseguro.com/orders'
-        : 'https://api.pagseguro.com/orders';
+        ? 'https://sandbox.api.pagseguro.com/checkouts'
+        : 'https://api.pagseguro.com/checkouts';
 
     $host    = $_SERVER['HTTP_HOST'] ?? 'fepauto.com.br';
     $baseUrl = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http') . '://' . $host;
@@ -54,9 +54,10 @@ if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
             'quantity'     => 1,
             'unit_amount'  => (int) round((float)$ins['valor'] * 100),
         ]],
-        'payment_methods'  => [
+        'payment_methods' => [
             ['type' => 'CREDIT_CARD'],
             ['type' => 'DEBIT_CARD'],
+            ['type' => 'BOLETO'],
         ],
         'redirect_url'      => $baseUrl . '/obrigado.php',
         'notification_urls' => [$baseUrl . '/pagseguro-notificacao.php'],
@@ -229,7 +230,7 @@ if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
                                     Entre em contato com a organização para receber os dados de pagamento:<br/>
                                     <ul class="mt-2">
                                         <li>E-mail: <strong>fepauto@fepauto.com.br</strong></li>
-                                        <li>WhatsApp: <strong>(91) 99999-9999</strong></li>
+                                        <li>WhatsApp: <strong>(91) 3242-4185</strong></li>
                                     </ul>
                                     Informe seu protocolo: <strong><?= $protocolo ?></strong>
                                 </div>
