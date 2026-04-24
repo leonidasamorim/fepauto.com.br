@@ -23,8 +23,8 @@ define('MAIL_SMTP_USER',  'noreply@fepauto.com.br');
 define('MAIL_SMTP_PASS',  '1=Xv57*oMV!b');
 
 // ─── PagSeguro ────────────────────────────────────────────────────────────────
-define('PAGSEGURO_EMAIL',    'pagseguro.leonidas@gmail.com');
-define('PAGSEGURO_TOKEN',    '');       // preencha com seu token da conta PagSeguro
+define('PAGSEGURO_EMAIL',    'rallyedosol2015@gmail.com');
+define('PAGSEGURO_TOKEN',    'a6a1c3f6-fa54-46e4-a045-eced52aade28d4aa19874eb0b77a61bd2211a2507a5ed8db-a3c2-4e2b-9a1b-57ba02b88de1');       // preencha com seu token da conta PagSeguro
 define('PAGSEGURO_SANDBOX',  false);     // true = sandbox | false = produção
 
 // ─── PIX ─────────────────────────────────────────────────────────────────────

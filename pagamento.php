@@ -28,74 +28,82 @@ if (!$ins) {
 
 $protocolo = '#' . str_pad((string)$ins['id'], 6, '0', STR_PAD_LEFT);
 $valor      = number_format((float)$ins['valor'], 2, ',', '.');
-$valorPag   = number_format((float)$ins['valor'], 2, '.', '');   // formato PagSeguro
 
-// ─── PagSeguro Checkout v2 ────────────────────────────────────────────────────
-$pagseguroUrl = null;
+// ─── PagBank Orders API v4 ────────────────────────────────────────────────────
+$pagseguroUrl  = null;
 $pagseguroErro = null;
 
 if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
     $apiUrl = PAGSEGURO_SANDBOX
-        ? 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout'
-        : 'https://ws.pagseguro.uol.com.br/v2/checkout';
+        ? 'https://sandbox.api.pagseguro.com/orders'
+        : 'https://api.pagseguro.com/orders';
 
-    $params = http_build_query([
-        'email'               => PAGSEGURO_EMAIL,
-        'token'               => PAGSEGURO_TOKEN,
-        'currency'            => 'BRL',
-        'itemId1'             => '1',
-        'itemDescription1'    => 'Inscrição ' . EVENT_NAME . ' – ' . $ins['veiculo'],
-        'itemAmount1'         => $valorPag,
-        'itemQuantity1'       => '1',
-        'reference'           => 'INSCRICAO-' . $ins['id'],
-        'senderName'          => $ins['nome'],
-        'senderEmail'         => $ins['email'],
-        'shippingAddressRequired' => 'false',
-        'redirectURL'         => 'http://' . ($_SERVER['HTTP_HOST'] ?? 'fepauto.com.br') . '/obrigado.php',
-        'notificationURL'     => 'http://' . ($_SERVER['HTTP_HOST'] ?? 'fepauto.com.br') . '/pagseguro-notificacao.php',
-    ]);
+    $host    = $_SERVER['HTTP_HOST'] ?? 'fepauto.com.br';
+    $baseUrl = ((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http') . '://' . $host;
 
-   
+    $body = json_encode([
+        'reference_id' => 'INSCRICAO-' . $ins['id'],
+        'customer'     => [
+            'name'   => $ins['nome'],
+            'email'  => $ins['email'],
+            'tax_id' => preg_replace('/\D/', '', $ins['cpf']),
+        ],
+        'items' => [[
+            'reference_id' => '1',
+            'name'         => mb_substr('Inscrição ' . EVENT_NAME . ' – ' . $ins['veiculo'], 0, 64),
+            'quantity'     => 1,
+            'unit_amount'  => (int) round((float)$ins['valor'] * 100),
+        ]],
+        'payment_methods'  => [
+            ['type' => 'CREDIT_CARD'],
+            ['type' => 'DEBIT_CARD'],
+        ],
+        'redirect_url'      => $baseUrl . '/obrigado.php',
+        'notification_urls' => [$baseUrl . '/pagseguro-notificacao.php'],
+    ], JSON_UNESCAPED_UNICODE);
 
     $ch = curl_init($apiUrl);
     curl_setopt_array($ch, [
         CURLOPT_POST           => true,
-        CURLOPT_POSTFIELDS     => $params,
+        CURLOPT_POSTFIELDS     => $body,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_SSL_VERIFYPEER => true,
         CURLOPT_TIMEOUT        => 15,
-        CURLOPT_HTTPHEADER     => ['Content-Type: application/x-www-form-urlencoded; charset=UTF-8'],
+        CURLOPT_HTTPHEADER     => [
+            'Authorization: Bearer ' . PAGSEGURO_TOKEN,
+            'Content-Type: application/json',
+            'x-api-version: 4.0',
+            'Accept: application/json',
+        ],
     ]);
     $response = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     curl_close($ch);
 
-    if ($response) {
-        $xml  = simplexml_load_string($response);
-        $code = (string)($xml->code ?? '');
+    $data = json_decode($response, true);
 
-        if ($code) {
-            $redirectBase = PAGSEGURO_SANDBOX
-                ? 'https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html'
-                : 'https://pagseguro.uol.com.br/v2/checkout/payment.html';
-            $pagseguroUrl = $redirectBase . '?code=' . $code;
-
-            db()->prepare('UPDATE inscricoes SET pagseguro_code = ? WHERE id = ?')
-               ->execute([$code, $ins['id']]);
-        } else {
-            // Extrai mensagem de erro do XML do PagSeguro
-            $erroMsg = '';
-            if (isset($xml->error)) {
-                foreach ($xml->error as $e) {
-                    $erroMsg .= '[' . (string)$e->code . '] ' . (string)$e->message . ' ';
-                }
+    if ($httpCode === 201 && !empty($data['links'])) {
+        foreach ($data['links'] as $link) {
+            if (($link['rel'] ?? '') === 'PAY') {
+                $pagseguroUrl = $link['href'];
+                break;
             }
-            $pagseguroErro = $erroMsg ?: 'Erro ao iniciar pagamento no PagSeguro.';
-            error_log("PagSeguro HTTP {$httpCode}: {$response}");
+        }
+        if ($pagseguroUrl) {
+            db()->prepare('UPDATE inscricoes SET pagseguro_code = ? WHERE id = ?')
+               ->execute([$data['id'] ?? '', $ins['id']]);
+        } else {
+            $pagseguroErro = 'Pedido criado, mas link de pagamento não encontrado na resposta.';
+            error_log("PagBank sem link PAY: {$response}");
         }
     } else {
-        $pagseguroErro = 'Não foi possível conectar ao PagSeguro. Tente novamente em instantes.';
-        error_log("PagSeguro HTTP {$httpCode}: sem resposta");
+        $msgs = $data['error_messages'] ?? ($data['errors'] ?? []);
+        $msg  = '';
+        foreach ((array)$msgs as $e) {
+            $msg .= ($e['description'] ?? $e['message'] ?? json_encode($e)) . ' ';
+        }
+        $pagseguroErro = trim($msg) ?: "Erro ao iniciar pagamento (HTTP {$httpCode}).";
+        error_log("PagBank HTTP {$httpCode}: {$response}");
     }
 }
 ?>
