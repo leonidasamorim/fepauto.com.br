@@ -61,7 +61,7 @@ function emailConfirmacao(array $d): string {
         default => $d['veiculo'],
     };
     $isPix   = ($d['forma_pagamento'] ?? '') === 'pix';
-    $titulo  = $isPix ? 'Inscrição em andamento!' : 'Inscrição emandamento!';
+    $titulo  = $isPix ? 'Inscrição em andamento!' : 'Inscrição em andamento!';
     $avisoTxt = $isPix
         ? 'Sua inscrição foi recebida. Para garantir sua vaga, realize o pagamento via PIX e envie o comprovante para <strong>fepauto@fepauto.com.br</strong>.'
         : 'Sua inscrição estará confirmada somente após a confirmação do pagamento.';
