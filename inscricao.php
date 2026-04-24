@@ -549,7 +549,7 @@ $csrf = $_SESSION['csrf_token'];
                             <!-- Botão -->
                             <div class="row mt-3">
                                 <div class="col-md-12 text-center">
-                                    <button type="submit" id="btn-submit" class="btn btn-primary btn-lg">
+                                    <button type="submit" id="btn-submit" class="btn btn-lg" style="background:linear-gradient(135deg,#f5a623 0%,#e8490a 100%);color:#fff;border:none;font-weight:700;">
                                         ENVIAR INSCRIÇÃO
                                     </button>
                                 </div>
