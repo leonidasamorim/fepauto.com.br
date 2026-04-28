@@ -62,6 +62,8 @@ if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
         'notification_urls' => [$baseUrl . '/pagseguro-notificacao.php'],
     ], JSON_UNESCAPED_UNICODE);
 
+    @file_put_contents("logs/requests". date("Ymd").'-'.date("His") ."_request_".$ins['id']."_pagseguro.txt", $body);
+
     $ch = curl_init($apiUrl);
     curl_setopt_array($ch, [
         CURLOPT_POST           => true,
