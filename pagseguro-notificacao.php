@@ -27,9 +27,9 @@ gravar_request2();
 
 // --- Fluxo 1: Retorno Automático (POST direto com TransacaoID) ---
 if (!empty($_POST['TransacaoID']) && !empty($_POST['Referencia'])) {
-    $transacaoId     = $_POST['TransacaoID']     ?? '';
-    $referencia      = $_POST['Referencia']      ?? '';
-    $statusTransacao = $_POST['StatusTransacao'] ?? '';
+    $transacaoId     = trim($_POST['TransacaoID']     ?? '');
+    $referencia      = trim($_POST['Referencia']      ?? '');
+    $statusTransacao = trim($_POST['StatusTransacao'] ?? '');
 
     if (!preg_match('/^INSCRICAO-(\d+)$/', $referencia, $m)) {
         http_response_code(200);
