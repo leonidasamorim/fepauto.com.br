@@ -24,7 +24,7 @@ define('MAIL_SMTP_PASS',  '1=Xv57*oMV!b');
 
 // ─── PagSeguro ────────────────────────────────────────────────────────────────
 define('PAGSEGURO_EMAIL',    'rallyedosol2015@gmail.com');
-define('PAGSEGURO_TOKEN',    'e893db5b-0e44-4fc0-b783-1d5c15cee1bdb8946a7e4aa38925d1d46c5f8b5d7a489d48-6360-4c96-a5ab-ca1308aea2d3');       // preencha com seu token da conta PagSeguro
+define('PAGSEGURO_TOKEN',    '1eb3cc76-dc52-4fe3-ae37-fb0eb66fc1efb0e1e704461ba89c668c1b327a65026af67c-6797-4be1-bb4f-205ceb3c99c0');       // preencha com seu token da conta PagSeguro
 define('PAGSEGURO_SANDBOX',  false);     // true = sandbox | false = produção
 
 // ─── PIX ─────────────────────────────────────────────────────────────────────
