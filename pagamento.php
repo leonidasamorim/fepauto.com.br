@@ -52,8 +52,8 @@ if (!empty(PAGSEGURO_TOKEN) && $ins['status_pagamento'] === 'pendente') {
             'reference_id' => '1',
             'name'         => mb_substr('Inscrição ' . EVENT_NAME . ' – ' . $ins['veiculo'], 0, 64),
             'quantity'     => 1,
-            'unit_amount'  => '200',
-            //'unit_amount'  => (int) round((float)$ins['valor'] * 100),
+           //'unit_amount'  => '200',
+            'unit_amount'  => (int) round((float)$ins['valor'] * 100),
         ]],
         'payment_methods' => [
             ['type' => 'CREDIT_CARD'],
