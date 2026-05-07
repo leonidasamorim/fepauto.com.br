@@ -470,7 +470,7 @@ $csrf = $_SESSION['csrf_token'];
                             <div id="valor-carteira-moto-quadriciculo" class="row mt-1" style="display:none">
                                 <div class="col-md-12">
                                     <div class="alert alert-info mb-1">
-                                        <strong>+ Carteira nova (Moto/Quadriciclo) – Apenas este evento:</strong>
+                                        <strong>+ Apenas este evento:</strong>
                                         R$ <?= number_format(CARTEIRA_MOTO, 2, ',', '.') ?> será somado ao valor da inscrição.
                                     </div>
                                 </div>
@@ -480,7 +480,7 @@ $csrf = $_SESSION['csrf_token'];
                             <div id="valor-carteira-moto-ano" class="row mt-1" style="display:none">
                                 <div class="col-md-12">
                                     <div class="alert alert-info mb-1">
-                                        <strong>+ Carteira nova (Moto/Quadriciclo) – Ano todo:</strong>
+                                        <strong>+ Ano todo:</strong>
                                         R$ <?= number_format(CARTEIRA_MOTO_ANO, 2, ',', '.') ?> será somado ao valor da inscrição.
                                     </div>
                                 </div>
