@@ -423,9 +423,9 @@ $csrf = $_SESSION['csrf_token'];
                                     <div class="form-wrap">
                                         <select id="fEspecificarMoto" class="form-control" name="fEspecificarMoto">
                                             <option value="">-- Selecione --</option>
-                                            <option value="Nunca teve carteira CBM – participará somente do Rallye"
-                                                    <?= oldSel('fEspecificarMoto','Nunca teve carteira CBM – participará somente do Rallye') ?>>
-                                                Nunca teve carteira CBM e participará somente do Rallye
+                                            <option value="Não tem carteira CBM"
+                                                    <?= oldSel('fEspecificarMoto','Não tem carteira CBM') ?>>
+                                                Não tem carteira CBM
                                             </option>
                                         </select>
                                     </div>

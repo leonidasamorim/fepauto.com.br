@@ -35,7 +35,7 @@ define('PIX_BANCO',   'CAIXA ECONOMICA FEDERAL');
 // ─── Carteira da Federação ────────────────────────────────────────────────────
 define('CARTEIRA_CARRO',           214.00);
 define('CARTEIRA_CARRO_RENOVACAO', 528.00); // apenas categorias PTRR1 e PNRR
-define('CARTEIRA_MOTO',            400.00);
+define('CARTEIRA_MOTO',            100.00);
 define('CARTEIRA_MOTO_RENOVACAO',  400.00);
 
 // ─── Evento ───────────────────────────────────────────────────────────────────
