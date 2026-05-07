@@ -57,7 +57,10 @@ $csrf = $_SESSION['csrf_token'];
             <div class="container" style="position:relative;z-index:1;padding-bottom:28px;">
                 <div class="row">
                     <div class="col-sm-12 text-center">
-                        <img src="logov2.png" alt="Logo Rallye do Sol 2026" style="width:180px;height:auto;object-fit:contain;border-radius:20%;margin-bottom:16px;display:block;margin-left:auto;margin-right:auto;">
+                        <div style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:20px;margin-bottom:16px;">
+                            <img src="logo-fepauto.jpeg" alt="Logo FEPAUTO" style="width:110px;height:auto;object-fit:contain;border-radius:20%;">
+                            <img src="logo-fepam.png" alt="Logo FEPAM" style="width:130px;height:auto;object-fit:contain;">
+                        </div>
                         <h2 style="text-shadow:2px 2px 8px #000;font-size:36px;color:#fff;margin:0;"
                             class="page-title text-center">
                             Inscrição – XXIX Rallye do Sol 2026

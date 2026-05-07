@@ -343,7 +343,10 @@
 
 <!-- ── HERO ── -->
 <section class="hero">
-    <img src="logov2.png" alt="FEPAUTO" class="hero-logo">
+    <div class="hero-logo" style="display:flex;flex-direction:row;align-items:center;gap:12px;">
+        <img src="logo-fepauto.jpeg" alt="FEPAUTO" style="width:90px;height:auto;object-fit:contain;border-radius:20%;">
+        <img src="logo-fepam.png" alt="FEPAM" style="width:110px;height:auto;object-fit:contain;">
+    </div>
 
     <div class="hero-content">
         <p class="hero-edition">XXIX Edição &bull; 2026</p>
