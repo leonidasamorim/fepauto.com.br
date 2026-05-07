@@ -13,6 +13,7 @@ $(document).ready(function () {
         $('#box-especificar-moto-renovacao').hide();
         $('#valor-carteira-carro').hide();
         $('#valor-carteira-moto-quadriciculo').hide();
+        $('#valor-carteira-moto-ano').hide();
         $('#alert-possui-carteira').hide();
         $('#alert-nao-possui-carteira').hide();
         $('#v-atencao').hide();
@@ -78,9 +79,20 @@ $(document).ready(function () {
             }
             if (veiculo === 'Moto' || veiculo === 'Quadriciclo') {
                 $('#box-especificar-moto').show();
-                $('#valor-carteira-moto-quadriciculo').show();
                 $('#fEspecificarMoto').prop('required', true);
             }
+        }
+    });
+
+    // ─── Especificação moto (sem carteira) ───────────────────────────────────
+    $('#fEspecificarMoto').on('change', function () {
+        var val = $(this).val();
+        $('#valor-carteira-moto-quadriciculo').hide();
+        $('#valor-carteira-moto-ano').hide();
+        if (val === 'Não tem carteira CBM - Evento') {
+            $('#valor-carteira-moto-quadriciculo').show();
+        } else if (val === 'Não tem carteira CBM - Ano todo') {
+            $('#valor-carteira-moto-ano').show();
         }
     });
 
@@ -196,7 +208,7 @@ $(document).ready(function () {
 
     function escondeBoxesCarteira() {
         $('#box-especificar-carro-renovacao, #box-especificar-moto, #box-especificar-moto-renovacao').hide();
-        $('#valor-carteira-carro, #valor-carteira-moto-quadriciculo').hide();
+        $('#valor-carteira-carro, #valor-carteira-moto-quadriciculo, #valor-carteira-moto-ano').hide();
         $('#valor-carteira-carro-renovacao, #valor-carteira-moto-quadriciculo-renovacao').hide();
         $('#box-num-carteira').hide();
     }

@@ -30,7 +30,7 @@ $csrf = $_SESSION['csrf_token'];
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Inscrição – XXVI Rallye do Sol 2026</title>
+    <title>Inscrição – XXIX Rallye do Sol 2026</title>
     <link rel="stylesheet" href="inscricao-inc/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="inscricao-inc/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="inscricao-inc/css/style.css"/>
@@ -57,9 +57,10 @@ $csrf = $_SESSION['csrf_token'];
             <div class="container" style="position:relative;z-index:1;padding-bottom:28px;">
                 <div class="row">
                     <div class="col-sm-12 text-center">
+                        <img src="logov2.png" alt="Logo Rallye do Sol 2026" style="width:180px;height:auto;object-fit:contain;border-radius:20%;margin-bottom:16px;display:block;margin-left:auto;margin-right:auto;">
                         <h2 style="text-shadow:2px 2px 8px #000;font-size:36px;color:#fff;margin:0;"
                             class="page-title text-center">
-                            Inscrição – XXVI Rallye do Sol 2026
+                            Inscrição – XXIX Rallye do Sol 2026
                         </h2>
                     </div>
                 </div>
@@ -423,9 +424,13 @@ $csrf = $_SESSION['csrf_token'];
                                     <div class="form-wrap">
                                         <select id="fEspecificarMoto" class="form-control" name="fEspecificarMoto">
                                             <option value="">-- Selecione --</option>
-                                            <option value="Não tem carteira CBM"
-                                                    <?= oldSel('fEspecificarMoto','Não tem carteira CBM') ?>>
-                                                Não tem carteira CBM
+                                            <option value="Não tem carteira CBM - Evento"
+                                                    <?= oldSel('fEspecificarMoto','Não tem carteira CBM - Evento') ?>>
+                                                Não tem carteira CBM – Apenas este evento (R$ <?= number_format(CARTEIRA_MOTO, 2, ',', '.') ?>)
+                                            </option>
+                                            <option value="Não tem carteira CBM - Ano todo"
+                                                    <?= oldSel('fEspecificarMoto','Não tem carteira CBM - Ano todo') ?>>
+                                                Não tem carteira CBM – Ano todo (R$ <?= number_format(CARTEIRA_MOTO_ANO, 2, ',', '.') ?>)
                                             </option>
                                         </select>
                                     </div>
@@ -458,12 +463,22 @@ $csrf = $_SESSION['csrf_token'];
                                 </div>
                             </div>
 
-                            <!-- Valor carteira nova – Moto/Quadriciclo -->
+                            <!-- Valor carteira nova – Moto/Quadriciclo (apenas este evento) -->
                             <div id="valor-carteira-moto-quadriciculo" class="row mt-1" style="display:none">
                                 <div class="col-md-12">
                                     <div class="alert alert-info mb-1">
-                                        <strong>+ Carteira nova (Moto/Quadriciclo):</strong>
+                                        <strong>+ Carteira nova (Moto/Quadriciclo) – Apenas este evento:</strong>
                                         R$ <?= number_format(CARTEIRA_MOTO, 2, ',', '.') ?> será somado ao valor da inscrição.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Valor carteira nova – Moto/Quadriciclo (ano todo) -->
+                            <div id="valor-carteira-moto-ano" class="row mt-1" style="display:none">
+                                <div class="col-md-12">
+                                    <div class="alert alert-info mb-1">
+                                        <strong>+ Carteira nova (Moto/Quadriciclo) – Ano todo:</strong>
+                                        R$ <?= number_format(CARTEIRA_MOTO_ANO, 2, ',', '.') ?> será somado ao valor da inscrição.
                                     </div>
                                 </div>
                             </div>
@@ -494,7 +509,7 @@ $csrf = $_SESSION['csrf_token'];
                                 <div class="col-md-12 alert alert-warning mt-2">
                                     <strong style="color:red">ATENÇÃO:</strong>
                                     Seu nome será checado em nossa base de dados. Caso não conste informação sobre
-                                    filiação na federação, sua inscrição no XXVI Rallye do Sol será rejeitada.
+                                    filiação na federação, sua inscrição no XXIX Rallye do Sol será rejeitada.
                                 </div>
                             </div>
 
@@ -541,7 +556,7 @@ $csrf = $_SESSION['csrf_token'];
                                     II. Envie também o <strong>Atestado Médico</strong> para o e-mail
                                     <strong>fepauto@fepauto.com.br</strong><br/>
                                     </span>
-                                    III. No dia da entrega do kit do XXVI Rallye do Sol o inscrito deverá
+                                    III. No dia da entrega do kit do XXIX Rallye do Sol o inscrito deverá
                                     apresentar comprovante de pagamento.
                                 </div>
                             </div>

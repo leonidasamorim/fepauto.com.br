@@ -249,7 +249,13 @@ $isCarro = ($campos['veiculo'] === 'Carro');
 
 if ($campos['possui_carteira'] === '0') {
     // Não possui carteira → nova carteira
-    $valorCarteira = $isCarro ? CARTEIRA_CARRO : CARTEIRA_MOTO;
+    if ($isCarro) {
+        $valorCarteira = CARTEIRA_CARRO;
+    } elseif ($campos['esp_moto'] === 'Não tem carteira CBM - Ano todo') {
+        $valorCarteira = CARTEIRA_MOTO_ANO;
+    } else {
+        $valorCarteira = CARTEIRA_MOTO;
+    }
 } elseif ($campos['possui_carteira'] === '1' && $campos['carteira_valida'] === '0') {
     // Possui mas vencida → renovação
     $valorCarteira = $isCarro ? CARTEIRA_CARRO_RENOVACAO : CARTEIRA_MOTO_RENOVACAO;

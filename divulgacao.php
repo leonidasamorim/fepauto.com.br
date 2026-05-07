@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XXVI Rallye do Sol 2026 – Inscrições Abertas | FEPAUTO</title>
-    <meta name="description" content="Inscrições abertas para o XXVI Rallye do Sol 2026 – Benevides-Salinópolis. Corrida dia 25/07. Categorias: Carro/UTV, Quadriciclo e Moto/Iniciante.">
+    <title>XXIX Rallye do Sol 2026 – Inscrições Abertas | FEPAUTO</title>
+    <meta name="description" content="Inscrições abertas para o XXIX Rallye do Sol 2026 – Benevides-Salinópolis. Corrida dia 25/07. Categorias: Carro/UTV, Quadriciclo e Moto/Iniciante.">
 
     <link rel="stylesheet" href="inscricao-inc/css/bootstrap.min.css">
     <link rel="stylesheet" href="inscricao-inc/css/ionicons.min.css">
@@ -51,14 +51,11 @@
         .hero-logo {
             position: absolute;
             top: 24px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 80px;
+            left: 45%;
+            width: 200px;
+            height: 130px;
             object-fit: contain;
-            border-radius: 50%;
-            border: 3px solid rgba(255,255,255,0.9);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            border-radius: 20%;
             z-index: 2;
         }
 
@@ -346,10 +343,10 @@
 
 <!-- ── HERO ── -->
 <section class="hero">
-    <img src="logo.jpeg" alt="FEPAUTO" class="hero-logo">
+    <img src="logov2.png" alt="FEPAUTO" class="hero-logo">
 
     <div class="hero-content">
-        <p class="hero-edition">XXVI Edição &bull; 2026</p>
+        <p class="hero-edition">XXIX Edição &bull; 2026</p>
         <h1 class="hero-title">Rallye do <span>Sol 2026</span></h1>
         <p class="hero-location">Benevides &rarr; Salinópolis &bull; Pará</p>
         <div class="hero-date">&#127942; Corrida: 25 de Julho de 2026</div>
@@ -366,7 +363,7 @@
         <div class="badge-item">
             <div class="badge-icon">&#127942;</div>
             <div class="badge-label">Edição</div>
-            <div class="badge-value">XXVI Rallye do Sol</div>
+            <div class="badge-value">XXIX Rallye do Sol</div>
         </div>
         <div class="badge-item">
             <div class="badge-icon">&#128197;</div>
