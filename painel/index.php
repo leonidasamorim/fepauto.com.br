@@ -136,7 +136,7 @@ function qStr(array $extra = []): string {
 <!-- Navbar -->
 <nav class="navbar-admin" style="display:flex;justify-content:space-between;align-items:center">
     <span style="display:flex;align-items:center;gap:12px;line-height:1.2">
-        <img src="../logo.jpeg" alt="FEPAUTO" style="height:44px;border-radius:4px;display:block"/>
+        <img src="../logo-fepauto.jpeg" alt="FEPAUTO" style="height:44px;border-radius:4px;display:block"/>
         <span>
             <strong style="font-size:16px">FEPAUTO</strong><br>
             <span style="font-size:12px;color:#aaa">Painel Administrativo</span>
