@@ -142,6 +142,19 @@ function rowBool(string $label, mixed $value): string {
             <?php endforeach; ?>
         </div>
     </div>
+
+    <!-- Deletar inscrição -->
+    <div class="card" style="border:1px solid #e74c3c">
+        <h5 style="color:#c0392b">Zona de Perigo</h5>
+        <p style="color:#555;margin-bottom:12px">Esta ação é irreversível. O registro será permanentemente excluído do banco de dados.</p>
+        <form method="POST" action="deletar-inscricao.php" style="margin:0"
+              onsubmit="return confirm('Tem certeza que deseja EXCLUIR permanentemente a inscrição #<?= str_pad((string)$ins['id'], 6, '0', STR_PAD_LEFT) ?> de <?= htmlspecialchars(addslashes($ins['nome'])) ?>?\n\nEsta ação não pode ser desfeita.')">
+            <input type="hidden" name="id" value="<?= $ins['id'] ?>"/>
+            <button type="submit" class="btn btn-danger">
+                Excluir Inscrição
+            </button>
+        </form>
+    </div>
 </div>
 
 <script src="../inscricao-inc/js/jquery.min.js"></script>
