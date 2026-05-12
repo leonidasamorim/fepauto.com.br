@@ -36,8 +36,8 @@ define('PIX_BANCO',   'CAIXA ECONOMICA FEDERAL');
 define('CARTEIRA_CARRO',           214.00);
 define('CARTEIRA_CARRO_RENOVACAO', 528.00); // apenas categorias PTRR1 e PNRR
 define('CARTEIRA_MOTO',            100.00);
-define('CARTEIRA_MOTO_ANO',        400.00);
-define('CARTEIRA_MOTO_RENOVACAO',  400.00);
+define('CARTEIRA_MOTO_ANO',        450.00);
+define('CARTEIRA_MOTO_RENOVACAO',  450.00);
 
 // ─── Evento ───────────────────────────────────────────────────────────────────
 define('EVENT_NAME',  'XXIX Rallye do Sol 2026');
