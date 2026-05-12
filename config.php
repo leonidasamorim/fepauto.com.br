@@ -43,12 +43,12 @@ define('CARTEIRA_MOTO_RENOVACAO',  450.00);
 define('EVENT_NAME',  'XXIX Rallye do Sol 2026');
 define('EVENT_YEAR',  '2026');
 
-// ─── Tabela de preços (Carro/UTV | Quadriciclo | Moto Iniciante) ─────────────
-// Cada lote: ['ate' => 'AAAA-MM-DD', 'carro' => float, 'quadriciclo' => float, 'moto' => float]
+// ─── Tabela de preços (Carro/UTV | Moto-Quadricículo | Moto Iniciante) ───────
+// Cada lote: ['ate' => 'AAAA-MM-DD', 'carro' => float, 'moto' => float, 'moto_iniciante' => float]
 define('PRECOS', [
-    ['ate' => '2026-05-31', 'carro' => 350.00, 'quadriciclo' => 250.00, 'moto' => 140.00],
-    ['ate' => '2026-06-15', 'carro' => 360.00, 'quadriciclo' => 260.00, 'moto' => 150.00],
-    ['ate' => '2026-06-30', 'carro' => 370.00, 'quadriciclo' => 270.00, 'moto' => 160.00],
-    ['ate' => '2026-07-15', 'carro' => 380.00, 'quadriciclo' => 280.00, 'moto' => 170.00],
-    ['ate' => '2026-07-22', 'carro' => 400.00, 'quadriciclo' => 300.00, 'moto' => 190.00],
+    ['ate' => '2026-05-31', 'carro' => 350.00, 'moto' => 250.00, 'moto_iniciante' => 140.00],
+    ['ate' => '2026-06-15', 'carro' => 360.00, 'moto' => 260.00, 'moto_iniciante' => 150.00],
+    ['ate' => '2026-06-30', 'carro' => 370.00, 'moto' => 270.00, 'moto_iniciante' => 160.00],
+    ['ate' => '2026-07-15', 'carro' => 380.00, 'moto' => 280.00, 'moto_iniciante' => 170.00],
+    ['ate' => '2026-07-22', 'carro' => 400.00, 'moto' => 300.00, 'moto_iniciante' => 190.00],
 ]);

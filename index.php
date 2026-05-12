@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XXIX Rallye do Sol 2026 – Inscrições Abertas | FEPAUTO</title>
-    <meta name="description" content="Inscrições abertas para o XXIX Rallye do Sol 2026 – Benevides-Salinópolis. Corrida dia 25/07. Categorias: Carro/UTV, Quadriciclo e Moto/Iniciante.">
+    <meta name="description" content="Inscrições abertas para o XXIX Rallye do Sol 2026 – Benevides-Salinópolis. Corrida dia 25/07. Categorias: Carro/UTV, Moto-Quadricículo e Moto Iniciante.">
 
     <link rel="stylesheet" href="inscricao-inc/css/bootstrap.min.css">
     <link rel="stylesheet" href="inscricao-inc/css/ionicons.min.css">
@@ -381,7 +381,7 @@
         <div class="badge-item">
             <div class="badge-icon">&#127939;</div>
             <div class="badge-label">Categorias</div>
-            <div class="badge-value">Carro, Quadriciclo e Moto</div>
+            <div class="badge-value">Carro, Moto-Quadricículo e Moto Iniciante</div>
         </div>
     </div>
 </section>

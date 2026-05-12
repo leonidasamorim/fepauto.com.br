@@ -37,9 +37,9 @@ function validarCpf(string $cpf): bool {
 
 function calcularValor(string $veiculo): float {
     $campo = match ($veiculo) {
-        'Carro'       => 'carro',
-        'Quadriciclo' => 'quadriciclo',
-        default       => 'moto',
+        'Carro'          => 'carro',
+        'Moto Iniciante' => 'moto_iniciante',
+        default          => 'moto',
     };
     $hoje = date('Y-m-d');
     foreach (PRECOS as $lote) {

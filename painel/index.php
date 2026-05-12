@@ -186,15 +186,15 @@ function qStr(array $extra = []): string {
         </div>
         <div class="col-md-4">
             <div class="card-veiculo stat-moto">
-                <h5>🏍 Moto</h5>
-                <h2><?= $statsVeiculo['Moto'] ?? 0 ?></h2>
+                <h5>🏍 Moto-Quadricículo</h5>
+                <h2><?= $statsVeiculo['Moto-Quadricículo'] ?? 0 ?></h2>
                 <small>inscrições</small>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card-veiculo stat-quadriciclo">
-                <h5>🚜 Quadriciclo</h5>
-                <h2><?= $statsVeiculo['Quadriciclo'] ?? 0 ?></h2>
+                <h5>🏍 Moto Iniciante</h5>
+                <h2><?= $statsVeiculo['Moto Iniciante'] ?? 0 ?></h2>
                 <small>inscrições</small>
             </div>
         </div>
@@ -203,7 +203,7 @@ function qStr(array $extra = []): string {
     <!-- Inscrições por categoria -->
     <div class="row mb-4">
         <?php
-        $veiculoLabels = ['Carro' => '🚗 Carro / UTV', 'Moto' => '🏍 Moto', 'Quadriciclo' => '🚜 Quadriciclo'];
+        $veiculoLabels = ['Carro' => '🚗 Carro / UTV', 'Moto-Quadricículo' => '🏍 Moto-Quadricículo', 'Moto Iniciante' => '🏍 Moto Iniciante'];
         uksort($veiculoLabels, fn($a, $b) => ($statsVeiculo[$b] ?? 0) <=> ($statsVeiculo[$a] ?? 0));
         foreach ($veiculoLabels as $vKey => $vLabel):
             if (empty($statsCategoria[$vKey])) continue;
@@ -275,8 +275,8 @@ function qStr(array $extra = []): string {
             <select name="veiculo" class="form-control">
                 <option value="">Todos</option>
                 <option value="Carro"       <?= $filtroVeiculo === 'Carro'       ? 'selected' : '' ?>>Carro/UTV</option>
-                <option value="Moto"        <?= $filtroVeiculo === 'Moto'        ? 'selected' : '' ?>>Moto</option>
-                <option value="Quadriciclo" <?= $filtroVeiculo === 'Quadriciclo' ? 'selected' : '' ?>>Quadriciclo</option>
+                <option value="Moto-Quadricículo" <?= $filtroVeiculo === 'Moto-Quadricículo' ? 'selected' : '' ?>>Moto-Quadricículo</option>
+                <option value="Moto Iniciante"    <?= $filtroVeiculo === 'Moto Iniciante'    ? 'selected' : '' ?>>Moto Iniciante</option>
             </select>
         </div>
         <div class="col-md-2">

@@ -40,12 +40,12 @@ $(document).ready(function () {
             $('#v-atestado-carro').show();
         }
 
-        if (veiculo === 'Moto') {
+        if (veiculo === 'Moto-Quadricículo') {
             $('#fCategoria').load('categoria-moto-v2.php');
             removerRequiredNavegador();
         }
 
-        if (veiculo === 'Quadriciclo') {
+        if (veiculo === 'Moto Iniciante') {
             $('#fCategoria').load('categoria-quadriciclo-v2.php');
             removerRequiredNavegador();
         }
@@ -77,7 +77,7 @@ $(document).ready(function () {
             if (veiculo === 'Carro') {
                 $('#valor-carteira-carro').show();
             }
-            if (veiculo === 'Moto' || veiculo === 'Quadriciclo') {
+            if (veiculo === 'Moto-Quadricículo' || veiculo === 'Moto Iniciante') {
                 $('#box-especificar-moto').show();
                 $('#fEspecificarMoto').prop('required', true);
             }
@@ -110,7 +110,7 @@ $(document).ready(function () {
                 $('#valor-carteira-carro-renovacao').show();
                 $('#fEspecificarCarro').prop('required', true);
             }
-            if (veiculo === 'Moto' || veiculo === 'Quadriciclo') {
+            if (veiculo === 'Moto-Quadricículo' || veiculo === 'Moto Iniciante') {
                 $('#box-especificar-moto-renovacao').show();
                 $('#valor-carteira-moto-quadriciculo-renovacao').show();
                 $('#fEspecificarMotoRenovacao').prop('required', true);

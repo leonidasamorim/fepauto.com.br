@@ -97,7 +97,7 @@ $csrf = $_SESSION['csrf_token'];
                                     <td>R$ 400,00</td>
                                 </tr>
                                 <tr>
-                                    <th>Quadriciclo</th>
+                                    <th>Moto / Quadricículo</th>
                                     <td>R$ 250,00</td>
                                     <td>R$ 260,00</td>
                                     <td>R$ 270,00</td>
@@ -105,7 +105,7 @@ $csrf = $_SESSION['csrf_token'];
                                     <td>R$ 300,00</td>
                                 </tr>
                                  <tr>
-                                    <th>Moto / Iniciante</th>
+                                    <th>Moto Iniciante</th>
                                     <td>R$ 140,00</td>
                                     <td>R$ 150,00</td>
                                     <td>R$ 160,00</td>
@@ -306,8 +306,8 @@ $csrf = $_SESSION['csrf_token'];
                                         <select class="form-control" id="fVeiculo" name="fVeiculo" required>
                                             <option value="">-- Selecione --</option>
                                             <option value="Carro"       <?= oldSel('fVeiculo','Carro') ?>>Carro / UTV</option>
-                                            <option value="Moto"        <?= oldSel('fVeiculo','Moto') ?>>Moto</option>
-                                            <option value="Quadriciclo" <?= oldSel('fVeiculo','Quadriciclo') ?>>Quadriciclo</option>
+                                            <option value="Moto-Quadricículo" <?= oldSel('fVeiculo','Moto-Quadricículo') ?>>Moto / Quadricículo</option>
+                                            <option value="Moto Iniciante"    <?= oldSel('fVeiculo','Moto Iniciante') ?>>Moto Iniciante</option>
                                         </select>
                                     </div>
                                 </div>

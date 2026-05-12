@@ -1,6 +1,5 @@
 <?php
 $categorias = [
-    'Moto Iniciante'                                 => 'MOTO INICIANTE',
     'Novato'                                         => 'NOVATO',
     'Intermediário'                                  => 'INTERMEDIÁRIO',
     'Over45'                                         => 'OVER45',
