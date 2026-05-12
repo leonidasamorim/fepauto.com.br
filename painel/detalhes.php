@@ -114,7 +114,9 @@ function rowBool(string $label, mixed $value): string {
     <div class="card">
         <h5>Pagamento</h5>
         <table class="table table-bordered">
-            <?= row('Valor', 'R$ ' . number_format((float)$ins['valor'], 2, ',', '.')) ?>
+            <?= row('Valor da Inscrição', 'R$ ' . number_format((float)$ins['valor_inscricao'], 2, ',', '.')) ?>
+            <?= row('Desconto Carteira', 'R$ ' . number_format((float)$ins['valor_carteira'], 2, ',', '.')) ?>
+            <?= row('Valor Total', 'R$ ' . number_format((float)$ins['valor'], 2, ',', '.')) ?>
             <?= row('Status', strtoupper($ins['status_pagamento'])) ?>
             <?= row('Código PagSeguro', $ins['pagseguro_code']) ?>
             <?= row('Transaction ID', $ins['pagseguro_transaction_id']) ?>
