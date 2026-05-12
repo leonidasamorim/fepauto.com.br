@@ -4,7 +4,7 @@ $categorias = [
     'Intermediário'                                  => 'INTERMEDIÁRIO',
     'Over45'                                         => 'OVER45',
     'Graduado'                                       => 'GRADUADO',
-    'Quadriculo'                                     => 'QUADRICULO'
+    'Quadriciclo'                                     => 'QUADRICICLO',
 ];
 foreach ($categorias as $val => $label) {
     echo '<option value="' . htmlspecialchars($val) . '">' . htmlspecialchars($label) . "</option>\n";
