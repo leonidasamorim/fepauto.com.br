@@ -177,24 +177,31 @@ function qStr(array $extra = []): string {
 
     <!-- Cards por veículo -->
     <div class="row mt-2">
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card-veiculo stat-carro">
                 <h5>🚗 Carro / UTV</h5>
                 <h2><?= $statsVeiculo['Carro'] ?? 0 ?></h2>
                 <small>inscrições</small>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card-veiculo stat-moto">
                 <h5>🏍 Moto-Quadricículo</h5>
                 <h2><?= $statsVeiculo['Moto-Quadricículo'] ?? 0 ?></h2>
                 <small>inscrições</small>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="card-veiculo stat-quadriciclo">
                 <h5>🏍 Moto Iniciante</h5>
                 <h2><?= $statsVeiculo['Moto Iniciante'] ?? 0 ?></h2>
+                <small>inscrições</small>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card-veiculo" style="background:#d35400">
+                <h5>🏍 Moto</h5>
+                <h2><?= $statsVeiculo['Moto'] ?? 0 ?></h2>
                 <small>inscrições</small>
             </div>
         </div>
@@ -203,15 +210,15 @@ function qStr(array $extra = []): string {
     <!-- Inscrições por categoria -->
     <div class="row mb-4">
         <?php
-        $veiculoLabels = ['Carro' => '🚗 Carro / UTV', 'Moto-Quadricículo' => '🏍 Moto-Quadricículo', 'Moto Iniciante' => '🏍 Moto Iniciante'];
+        $veiculoLabels = ['Carro' => '🚗 Carro / UTV', 'Moto-Quadricículo' => '🏍 Moto-Quadricículo', 'Moto Iniciante' => '🏍 Moto Iniciante', 'Moto' => '🏍 Moto'];
         uksort($veiculoLabels, fn($a, $b) => ($statsVeiculo[$b] ?? 0) <=> ($statsVeiculo[$a] ?? 0));
         foreach ($veiculoLabels as $vKey => $vLabel):
             if (empty($statsCategoria[$vKey])) continue;
             $cats    = $statsCategoria[$vKey];
-            $colId   = 'cat-' . strtolower($vKey);
+            $colId   = 'cat-' . strtolower(str_replace(' ', '-', $vKey));
             $total   = count($cats);
         ?>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="section-title"><?= $vLabel ?></div>
             <table class="table table-sm cat-table mb-0">
                 <thead><tr><th>Categoria</th><th class="text-right">Qtd</th></tr></thead>
@@ -274,9 +281,10 @@ function qStr(array $extra = []): string {
             <label class="form-label">Veículo</label>
             <select name="veiculo" class="form-control">
                 <option value="">Todos</option>
-                <option value="Carro"       <?= $filtroVeiculo === 'Carro'       ? 'selected' : '' ?>>Carro/UTV</option>
+                <option value="Carro"            <?= $filtroVeiculo === 'Carro'            ? 'selected' : '' ?>>Carro/UTV</option>
                 <option value="Moto-Quadricículo" <?= $filtroVeiculo === 'Moto-Quadricículo' ? 'selected' : '' ?>>Moto-Quadricículo</option>
                 <option value="Moto Iniciante"    <?= $filtroVeiculo === 'Moto Iniciante'    ? 'selected' : '' ?>>Moto Iniciante</option>
+                <option value="Moto"              <?= $filtroVeiculo === 'Moto'              ? 'selected' : '' ?>>Moto</option>
             </select>
         </div>
         <div class="col-md-2">
