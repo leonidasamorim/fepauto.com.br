@@ -177,34 +177,28 @@ function qStr(array $extra = []): string {
 
     <!-- Cards por veículo -->
     <div class="row mt-2">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card-veiculo stat-carro">
                 <h5>🚗 Carro / UTV</h5>
                 <h2><?= $statsVeiculo['Carro'] ?? 0 ?></h2>
                 <small>inscrições</small>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card-veiculo stat-moto">
                 <h5>🏍 Moto-Quadricículo</h5>
                 <h2><?= $statsVeiculo['Moto-Quadricículo'] ?? 0 ?></h2>
                 <small>inscrições</small>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card-veiculo stat-quadriciclo">
                 <h5>🏍 Moto Iniciante</h5>
                 <h2><?= $statsVeiculo['Moto Iniciante'] ?? 0 ?></h2>
                 <small>inscrições</small>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card-veiculo" style="background:#d35400">
-                <h5>🏍 Moto</h5>
-                <h2><?= $statsVeiculo['Moto'] ?? 0 ?></h2>
-                <small>inscrições</small>
-            </div>
-        </div>
+    
     </div>
 
     <!-- Inscrições por categoria -->
@@ -223,43 +217,18 @@ function qStr(array $extra = []): string {
             <table class="table table-sm cat-table mb-0">
                 <thead><tr><th>Categoria</th><th class="text-right">Qtd</th></tr></thead>
                 <tbody>
-                <?php foreach (array_slice($cats, 0, 3) as $cat): ?>
+                <?php foreach ($cats as $cat): ?>
                     <tr>
                         <td><?= htmlspecialchars($cat['categoria'] ?: '(não informada)') ?></td>
                         <td class="text-right"><span class="qtd-badge"><?= (int)$cat['qtd'] ?></span></td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
-                <?php if ($total > 3): ?>
-                <tbody id="<?= $colId ?>" style="display:none">
-                <?php foreach (array_slice($cats, 3) as $cat): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($cat['categoria'] ?: '(não informada)') ?></td>
-                        <td class="text-right"><span class="qtd-badge"><?= (int)$cat['qtd'] ?></span></td>
-                    </tr>
-                <?php endforeach; ?>
-                </tbody>
-                <?php endif; ?>
             </table>
-            <?php if ($total > 3): ?>
-            <button type="button" onclick="toggleCat('<?= $colId ?>', this)"
-                    style="background:none;border:none;color:#2980b9;font-size:12px;cursor:pointer;padding:4px 0;margin-bottom:12px">
-                ▼ Ver todas (<?= $total ?> categorias)
-            </button>
-            <?php else: ?>
             <div style="margin-bottom:12px"></div>
-            <?php endif; ?>
         </div>
         <?php endforeach; ?>
     </div>
-    <script>
-    function toggleCat(id, btn) {
-        var el = document.getElementById(id);
-        var open = el.style.display !== 'none';
-        el.style.display = open ? 'none' : '';
-        btn.innerHTML = open ? '▼ Ver todas' : '▲ Fechar';
-    }
-    </script>
 
     <!-- Filtros -->
     <form method="GET" class="row g-2 mb-3 align-items-end">
@@ -284,7 +253,6 @@ function qStr(array $extra = []): string {
                 <option value="Carro"            <?= $filtroVeiculo === 'Carro'            ? 'selected' : '' ?>>Carro/UTV</option>
                 <option value="Moto-Quadricículo" <?= $filtroVeiculo === 'Moto-Quadricículo' ? 'selected' : '' ?>>Moto-Quadricículo</option>
                 <option value="Moto Iniciante"    <?= $filtroVeiculo === 'Moto Iniciante'    ? 'selected' : '' ?>>Moto Iniciante</option>
-                <option value="Moto"              <?= $filtroVeiculo === 'Moto'              ? 'selected' : '' ?>>Moto</option>
             </select>
         </div>
         <div class="col-md-2">
