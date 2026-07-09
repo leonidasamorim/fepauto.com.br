@@ -65,19 +65,20 @@ try {
         $stats[$row['status_pagamento']] = $row;
     }
 
-    // Totais por veículo
+    // Totais por veículo (somente pagos)
     $veiculoRows = db()->query(
-        "SELECT veiculo, COUNT(*) as qtd FROM inscricoes GROUP BY veiculo"
+        "SELECT veiculo, COUNT(*) as qtd FROM inscricoes WHERE status_pagamento = 'pago' GROUP BY veiculo"
     )->fetchAll();
     $statsVeiculo = [];
     foreach ($veiculoRows as $row) {
         $statsVeiculo[$row['veiculo']] = (int)$row['qtd'];
     }
 
-    // Totais por categoria (agrupado por veículo)
+    // Totais por categoria (agrupado por veículo, somente pagos)
     $categoriaRows = db()->query(
         "SELECT veiculo, categoria, COUNT(*) as qtd
          FROM inscricoes
+         WHERE status_pagamento = 'pago'
          GROUP BY veiculo, categoria
          ORDER BY veiculo, qtd DESC"
     )->fetchAll();
