@@ -26,3 +26,5 @@ jobs:
         source: "./*"
         overwrite: true
         target: /home2/leonid01/fepauto.com.br
+        tar_tmp_path: /home2/leonid01/tmp
+        debug: true
