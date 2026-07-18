@@ -16,6 +16,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Remove remote .git folder
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: br1116.hostgator.com.br
+        username: leonid01
+        port: 2222
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: rm -rf /home2/leonid01/fepauto.com.br/.git
+
     - name: Deploy site via SCP
       uses: appleboy/scp-action@v0.1.7
       with:
