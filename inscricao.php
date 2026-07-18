@@ -586,7 +586,7 @@ $csrf = $_SESSION['csrf_token'];
             <div class="row">
                 <div class="col-md-12 text-center">
                     <span style="color:#fff">FEPAUTO – Federação Paraense de Automobilismo<br/>
-                    CNPJ: 15.753.536/0001-55</span>
+                    CNPJ: 15.753.536/0001-55 <br> <?php echo date('d/m/Y h:i:s'); ?></span>
                 </div>
             </div>
         </div>
