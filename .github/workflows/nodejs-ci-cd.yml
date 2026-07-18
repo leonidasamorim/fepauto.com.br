@@ -1,0 +1,29 @@
+name: SSH CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    environment: site
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Deploy site via SCP
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: br1116.hostgator.com.br
+        username: leonid01
+        port: 2222
+        password: ${{ secrets.SSH_PASSWORD }}
+        source: "./*"
+        overwrite: true
+        target: /home2/leonid01/fepauto.com.br
