@@ -24,6 +24,8 @@ if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
 }
 $csrf = $_SESSION['csrf_token'];
+
+$inscricoesEncerradas = time() >= strtotime(INSCRICOES_ENCERRAM);
 ?>
 <!doctype html>
 <html lang="pt-BR">
@@ -567,9 +569,15 @@ $csrf = $_SESSION['csrf_token'];
                             <!-- Botão -->
                             <div class="row mt-3">
                                 <div class="col-md-12 text-center">
+<?php if ($inscricoesEncerradas): ?>
+                                    <div class="alert alert-danger" style="font-weight:700;">
+                                        As inscrições para o <?= htmlspecialchars(EVENT_NAME, ENT_QUOTES, 'UTF-8') ?> estão encerradas.
+                                    </div>
+<?php else: ?>
                                     <button type="submit" id="btn-submit" class="btn btn-lg" style="background:linear-gradient(135deg,#f5a623 0%,#e8490a 100%);color:#fff;border:none;font-weight:700;">
                                         ENVIAR INSCRIÇÃO
                                     </button>
+<?php endif; ?>
                                 </div>
                             </div>
 
@@ -586,7 +594,7 @@ $csrf = $_SESSION['csrf_token'];
             <div class="row">
                 <div class="col-md-12 text-center">
                     <span style="color:#fff">FEPAUTO – Federação Paraense de Automobilismo<br/>
-                    CNPJ: 15.753.536/0001-55 <br> <?php echo date('d/m/Y h:i:s'); ?></span>
+                    CNPJ: 15.753.536/0001-55 <br> <?php echo date('d/m/Y H:i:s'); ?></span>
                 </div>
             </div>
         </div>
