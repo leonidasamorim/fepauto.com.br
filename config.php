@@ -45,7 +45,7 @@ define('CARTEIRA_MOTO_RENOVACAO',  450.00);
 // ─── Evento ───────────────────────────────────────────────────────────────────
 define('EVENT_NAME',  'XXIX Rallye do Sol 2026');
 define('EVENT_YEAR',  '2026');
-define('INSCRICOES_ENCERRAM', '2026-07-18 19:00:00');
+define('INSCRICOES_ENCERRAM', '2026-07-22 21:00:00');
 
 // ─── Tabela de preços (Carro/UTV | Moto-Quadricículo | Moto Iniciante) ───────
 // Cada lote: ['ate' => 'AAAA-MM-DD', 'carro' => float, 'moto' => float, 'moto_iniciante' => float]
