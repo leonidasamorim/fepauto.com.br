@@ -3,9 +3,9 @@
 if (($_SERVER['HTTP_HOST'] ?? '') === 'fepauto.com.br' || ($_SERVER['HTTP_HOST'] ?? '') === 'www.fepauto.com.br') {
     define('DB_HOST', 'localhost');
     define('DB_PORT', '3306');
-    define('DB_NAME', 'u927543591_fepauto');
-    define('DB_USER', 'u927543591_fepauto');
-    define('DB_PASS', 'nkdOr!NY~8');
+    define('DB_NAME', 'leonid01_fepauto');
+    define('DB_USER', 'leonid01_fepauto');
+    define('DB_PASS', 'X;}&iExDE_4K');
 } else {
     define('DB_HOST', 'db');
     define('DB_PORT', '3306');
