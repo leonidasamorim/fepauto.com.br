@@ -52,7 +52,7 @@ function calcularValor(string $veiculo): float {
             return $lote[$campo];
         }
     }
-    $ultimo = end(PRECOS);
+    $ultimo = PRECOS[array_key_last(PRECOS)];
     return $ultimo[$campo];
 }
 
