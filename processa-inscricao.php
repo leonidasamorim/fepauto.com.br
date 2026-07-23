@@ -1,8 +1,4 @@
 <?php
-ini_set("display_errors", 1 );
-error_reporting(E_ALL);
-
-
 declare(strict_types=1);
 session_start();
 
@@ -144,10 +140,6 @@ function emailConfirmacao(array $d): string {
 // ─── Validação CSRF ───────────────────────────────────────────────────────────
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') redirect('inscricao.php');
-
-// if (time() >= strtotime(INSCRICOES_ENCERRAM)) {
-//     redirect('inscricao.php?erro=' . urlencode('As inscrições estão encerradas.'));
-// }
 
 if (!hash_equals($_SESSION['csrf_token'] ?? '', post('csrf_token'))) {
     redirect('inscricao.php?erro=' . urlencode('Token inválido. Tente novamente.'));
