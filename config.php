@@ -1,6 +1,6 @@
 <?php
 // ─── Timezone ─────────────────────────────────────────────────────────────────
-date_default_timezone_set('America/Sao_Paulo');
+#date_default_timezone_set('America/Sao_Paulo');
 
 // ─── Banco de dados ───────────────────────────────────────────────────────────
 if (($_SERVER['HTTP_HOST'] ?? '') === 'fepauto.com.br' || ($_SERVER['HTTP_HOST'] ?? '') === 'www.fepauto.com.br') {
